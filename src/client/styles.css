@@ -1,0 +1,836 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Meiryo", "Yu Gothic UI", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Rounded Mplus 1c",
+    "Segoe UI", -apple-system, sans-serif;
+  color: #1a1a1a;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 340px;
+  flex: none;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+  background: #fafafa;
+  transition: width 0.15s ease;
+}
+
+.toc-sidebar {
+  width: 220px;
+  flex: none;
+  border-left: 1px solid #ddd;
+  overflow-y: auto;
+  background: #fafafa;
+  transition: width 0.15s ease;
+}
+
+.toc-sidebar.collapsed {
+  width: 40px;
+  overflow: hidden;
+}
+
+.toc-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+}
+
+.toc-sidebar.collapsed .toc-sidebar-header {
+  padding: 12px 8px;
+  justify-content: center;
+}
+
+.toc-empty {
+  padding: 12px 16px;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.toc-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc-item:hover { background: #eee; }
+
+.sidebar.collapsed {
+  width: 40px;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+}
+
+.sidebar-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .sidebar-header {
+  padding: 12px 8px;
+  justify-content: center;
+}
+
+.sidebar-toggle-btn {
+  flex: none;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #555;
+}
+
+.sidebar-toggle-btn:hover { background: #eee; }
+
+.change-folder-btn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.sidebar-root-path {
+  padding: 4px 16px 8px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #eee;
+}
+
+.root-picker {
+  max-width: 1600px;
+  margin: 48px auto;
+  padding: 0 32px;
+}
+
+.root-picker h1 {
+  margin-bottom: 4px;
+}
+
+.native-picker-btn {
+  display: block;
+  margin: 16px 0 8px;
+  padding: 10px 16px;
+  background: #0056d6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.native-picker-btn:disabled { opacity: 0.6; }
+
+.native-picker-hint {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.root-picker-input {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.root-picker-input input {
+  flex: 1;
+  padding: 6px 8px;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.root-picker-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.root-picker-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+.root-picker-list li:last-child { border-bottom: none; }
+
+.root-picker-list button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+  flex: 1;
+}
+
+.root-picker-list button:hover { background: #f0f0f0; }
+
+.root-picker-list .use-btn {
+  flex: none;
+  color: #0056d6;
+  font-size: 0.85rem;
+}
+
+.root-picker-recents h2 {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.root-picker-recents ul {
+  list-style: none;
+  padding: 0;
+}
+
+.root-picker-recents button {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #0056d6;
+  cursor: pointer;
+}
+
+.readme-accordion {
+  margin-top: 24px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.readme-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: #fafafa;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.readme-accordion-caret {
+  display: inline-block;
+  transition: transform 0.15s ease;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.readme-accordion-caret.open { transform: rotate(90deg); }
+
+.readme-accordion-body {
+  border-top: 1px solid #ddd;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.search-panel {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.search-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.search-results {
+  margin-top: 8px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.search-status {
+  padding: 4px 4px;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.search-result {
+  margin-bottom: 6px;
+}
+
+.search-result-path {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 4px;
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.search-result-path:hover { background: #eee; }
+
+.search-result-line {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 2px 4px 2px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+.search-result-line:hover { background: #eee; }
+
+.search-result-lineno {
+  flex: none;
+  color: #aaa;
+}
+
+.search-result-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-text mark {
+  background: #fff3cd;
+  color: inherit;
+}
+
+.tree, .tree ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 14px;
+}
+
+.tree { padding-left: 8px; }
+
+.tree-dir-label {
+  padding: 4px 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.85rem;
+}
+
+.tree-file {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.tree-file:hover { background: #eee; }
+.tree-file.selected { background: #dbe9ff; }
+.tree-file.locked { color: #8a6d00; }
+.tree-file.too-large { color: #bbb; cursor: not-allowed; }
+.tree-file.too-large:hover { background: none; }
+.lock-icon, .file-kind-icon { margin-right: 4px; }
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.error-banner {
+  background: #ffe0e0;
+  color: #a30000;
+  padding: 8px 16px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.toolbar-path {
+  font-family: monospace;
+  color: #555;
+  flex: 1;
+}
+
+.toolbar-editing, .toolbar-locked {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-locked {
+  background: #fff3cd;
+  color: #7a5c00;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.badge-editing {
+  background: #e3f2ff;
+  color: #0056d6;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.editor-pane {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.editor-pane .milkdown {
+  height: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Crepe's theme sets a large 60px/120px padding directly on .ProseMirror,
+   which the outer .milkdown padding above doesn't reach. */
+.editor-pane .milkdown .ProseMirror {
+  padding: 8px 12px 40vh !important;
+}
+
+/* Crepe's default table border (--crepe-color-outline at 80% transparent) is too faint */
+.milkdown .milkdown-table-block th,
+.milkdown .milkdown-table-block td {
+  border-color: color-mix(in srgb, var(--crepe-color-outline), transparent 35%) !important;
+}
+
+.csv-editor {
+  padding: 8px 12px;
+}
+
+.csv-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.csv-toolbar button {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.csv-toolbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.csv-grid-wrap {
+  overflow: auto;
+}
+
+.csv-grid {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.csv-grid td {
+  border: 1px solid #ddd;
+  padding: 0;
+  vertical-align: top;
+  position: relative;
+}
+
+.csv-cell-input {
+  display: block;
+  width: 100%;
+  padding: 4px 6px;
+  border: none;
+  font-size: 0.85rem;
+  background: transparent;
+  font-family: inherit;
+  resize: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.csv-cell-input:focus {
+  outline: 2px solid #0056d6;
+  outline-offset: -2px;
+}
+
+.csv-header-row {
+  font-weight: 600;
+  background: #f5f5f5;
+}
+
+.csv-row-handle {
+  width: 32px;
+  text-align: center;
+  background: #fafafa;
+  color: #999;
+  font-size: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.csv-row-handle:hover { background: #eee; color: #555; }
+.csv-row-handle.selected { background: #dbe9ff; color: #0056d6; font-weight: 600; }
+
+.col-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+.col-resize-handle:hover { background: #0056d6; opacity: 0.4; }
+
+.milkdown .milkdown-code-block {
+  background: #e0e0e0 !important;
+}
+
+/* LaTeX blocks reuse the code-block component but shouldn't be re-typed as
+   another language - see latexBlockUi.ts. The Hide/Edit preview-toggle button
+   stays: for LaTeX it's the only way to show/hide the raw source (unlike
+   inline math, block LaTeX has no click-to-edit-preview), so hiding it left
+   blocks permanently stuck wherever their toggle state happened to be. */
+.milkdown .milkdown-code-block.latex-code-block .language-button {
+  display: none !important;
+}
+
+.milkdown .milkdown-code-block .cm-editor,
+.milkdown .milkdown-code-block .cm-gutters {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.milkdown .milkdown-code-block .cm-content,
+.milkdown .milkdown-code-block .cm-line,
+.milkdown .milkdown-code-block .milkdown-code-block-placeholder {
+  color: #ffffff !important;
+  caret-color: #ffffff;
+}
+
+.milkdown .milkdown-code-block .cm-gutters {
+  color: #888 !important;
+}
+
+.milkdown span[data-type="math_inline"] {
+  color: #000000 !important;
+  background: #ffffff !important;
+}
+
+.milkdown .katex {
+  color: #000000 !important;
+  background: #ffffff !important;
+}
+
+.milkdown .katex-display {
+  background: #ffffff !important;
+  padding: 4px 0;
+}
+
+/* KaTeX hides a MathML copy of each formula for screen readers, which embeds
+   the raw LaTeX source in an <annotation>. Browsers often prefer that hidden
+   annotation text over the visible rendering when you select-and-copy a
+   formula, so copying pastes "\frac{a}{b}" instead of the text you see.
+   Excluding it from selection makes copy fall back to the visible glyphs. */
+.katex .katex-mathml {
+  user-select: none;
+}
+
+.diagram-preview {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.diagram-preview-error {
+  padding: 10px 12px;
+  color: #a30000;
+  background: #ffe0e0;
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.diagram-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 8px;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+}
+
+.diagram-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.diagram-btn:hover { background: #f0f0f0; }
+
+.diagram-render {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+}
+
+.diagram-render svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-render:fullscreen {
+  background: #fff;
+  padding: 24px;
+}
+
+.diagram-render:fullscreen svg {
+  max-width: 95vw;
+  max-height: 95vh;
+  width: auto;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #888;
+}
+
+.image-picker-path {
+  padding: 6px 16px;
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: #888;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+}
+
+.image-picker-status {
+  padding: 12px;
+  color: #888;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.image-picker-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.image-picker-entry:hover { background: #f0f0f0; }
+
+.image-picker-thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #eee;
+  background: #fafafa;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #888;
+}
+
+.latex-cheatsheet-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.latex-cheatsheet-btn:hover { background: #f0f0f0; }
+
+.latex-cheatsheet-modal {
+  width: 640px;
+}
+
+.latex-cheatsheet-body {
+  overflow-y: auto;
+  padding: 12px 16px;
+}
+
+.latex-cheatsheet-hint {
+  margin: 0 0 12px;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.latex-cheatsheet-hint code {
+  background: #f0f0f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.latex-cheatsheet-group h3 {
+  margin: 16px 0 6px;
+  font-size: 0.85rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.latex-cheatsheet-group:first-of-type h3 {
+  margin-top: 0;
+}
+
+.latex-cheatsheet-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.latex-cheatsheet-row:hover { background: #f0f0f0; }
+
+.latex-cheatsheet-label {
+  flex: 0 0 140px;
+  font-size: 0.82rem;
+  color: #333;
+}
+
+.latex-cheatsheet-preview {
+  flex: 0 0 auto;
+  min-width: 60px;
+}
+
+.latex-cheatsheet-syntax {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.78rem;
+  color: #888;
+  text-align: right;
+}
