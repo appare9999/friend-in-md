@@ -3,6 +3,8 @@
 Let's write files that are easy for AI to read — and become better friends
 with AI!
 
+![friend-in-md screenshot](docs/images/frend_md.png)
+
 Point it at any folder of markdown (and csv) files (nested folders preserved),
 browse and edit them in a rich WYSIWYG editor right in the browser, and search
 across the whole tree. Files default to **locked** (read-only) — unlock one
