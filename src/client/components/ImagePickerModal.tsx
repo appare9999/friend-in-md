@@ -38,7 +38,7 @@ export function ImagePickerModal({ startDir, onSelect, onClose }: Props) {
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal image-picker-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <span>画像を挿入</span>
+          <span>Insert image</span>
           <button className="modal-close-btn" onClick={onClose}>✕</button>
         </div>
 
@@ -56,9 +56,9 @@ export function ImagePickerModal({ startDir, onSelect, onClose }: Props) {
               </button>
             </li>
           )}
-          {loading && <li className="image-picker-status">読み込み中…</li>}
+          {loading && <li className="image-picker-status">Loading…</li>}
           {!loading && entries.length === 0 && parent === null && (
-            <li className="image-picker-status">画像もフォルダもありません</li>
+            <li className="image-picker-status">No images or folders</li>
           )}
           {entries.map((entry) =>
             entry.isDir ? (

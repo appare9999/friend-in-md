@@ -3,7 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import type { ServerState } from "../state.js";
 import type { AppContext } from "../context.js";
-import { buildFileTree, MAX_CSV_BYTES, resolveSafePath } from "../lib/fileTree.js";
+import { buildFileTree, clampCsvLimitBytes, resolveSafePath } from "../lib/fileTree.js";
 import { log } from "../lib/log.js";
 import type {
   FileContentResponse,
@@ -29,14 +29,15 @@ function requireCtx(state: ServerState, reply: FastifyReply): AppContext | null 
 }
 
 export function registerFileRoutes(app: FastifyInstance, state: ServerState): void {
-  app.get("/api/tree", async (_req, reply) => {
+  app.get<{ Querystring: { csvLimit?: string } }>("/api/tree", async (req, reply) => {
     const ctx = requireCtx(state, reply);
     if (!ctx) return;
-    const tree = await buildFileTree(ctx.root);
+    const maxCsvBytes = clampCsvLimitBytes(req.query.csvLimit);
+    const tree = await buildFileTree(ctx.root, maxCsvBytes);
     return { tree: applyLocks(tree, ctx) };
   });
 
-  app.get<{ Querystring: { path?: string } }>("/api/file", async (req, reply) => {
+  app.get<{ Querystring: { path?: string; csvLimit?: string } }>("/api/file", async (req, reply) => {
     const ctx = requireCtx(state, reply);
     if (!ctx) return;
 
@@ -51,8 +52,9 @@ export function registerFileRoutes(app: FastifyInstance, state: ServerState): vo
     }
 
     if (path.extname(absPath).toLowerCase() === ".csv") {
+      const maxCsvBytes = clampCsvLimitBytes(req.query.csvLimit);
       const stat = await fs.stat(absPath).catch(() => null);
-      if (stat && stat.size > MAX_CSV_BYTES) {
+      if (stat && stat.size > maxCsvBytes) {
         return reply.code(413).send({ error: "CSV file is too large to open." });
       }
     }

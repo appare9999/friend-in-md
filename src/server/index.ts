@@ -1,23 +1,18 @@
-import Fastify from "fastify";
-import fastifyStatic from "@fastify/static";
-import fastifyCors from "@fastify/cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
+import { spawn, type ChildProcess } from "node:child_process";
 import open from "open";
 
-import { ServerState } from "./state.js";
-import { registerFileRoutes } from "./routes/files.js";
-import { registerLockRoutes } from "./routes/lock.js";
-import { registerEventRoutes } from "./routes/events.js";
-import { registerRootRoutes } from "./routes/root.js";
-import { registerSearchRoutes } from "./routes/search.js";
-import { registerDiagramRoutes } from "./routes/diagrams.js";
-import { registerAssetRoutes } from "./routes/assets.js";
-import { registerReadmeRoutes } from "./routes/readme.js";
+import { createServer } from "./app.js";
 import { log } from "./lib/log.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Must match vite.config.ts's `server.port` — in --dev mode the fastify
+// server skips serving dist-client (it doesn't exist yet), so the tray's
+// quick-note popup has to point at Vite's dev server instead.
+const VITE_DEV_URL = "http://localhost:5180";
 
 interface CliOptions {
   dir: string | null;
@@ -25,10 +20,11 @@ interface CliOptions {
   open: boolean;
   dev: boolean;
   verbose: boolean;
+  tray: boolean;
 }
 
 function parseArgs(argv: string[]): CliOptions {
-  const opts: CliOptions = { dir: null, port: 4317, open: true, dev: false, verbose: false };
+  const opts: CliOptions = { dir: null, port: 4317, open: true, dev: false, verbose: false, tray: true };
   const positional: string[] = [];
 
   for (let i = 0; i < argv.length; i++) {
@@ -41,6 +37,8 @@ function parseArgs(argv: string[]): CliOptions {
       opts.dev = true;
     } else if (arg === "--verbose") {
       opts.verbose = true;
+    } else if (arg === "--no-tray") {
+      opts.tray = false;
     } else {
       positional.push(arg);
     }
@@ -50,87 +48,75 @@ function parseArgs(argv: string[]): CliOptions {
   return opts;
 }
 
-async function listenOnFreePort(
-  app: ReturnType<typeof Fastify>,
-  startPort: number,
-  maxAttempts = 20
-): Promise<number> {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const port = startPort + attempt;
+async function waitForUrl(url: string, timeoutMs = 15000): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
     try {
-      await app.listen({ port, host: "127.0.0.1" });
-      return port;
-    } catch (err: unknown) {
-      const code = (err as NodeJS.ErrnoException).code;
-      if (code !== "EADDRINUSE" || attempt === maxAttempts - 1) throw err;
-      log(`⚠️ Port ${port} is in use, trying ${port + 1}…`);
+      await fetch(url);
+      return;
+    } catch {
+      await new Promise((resolve) => setTimeout(resolve, 300));
     }
   }
-  throw new Error("unreachable");
+}
+
+async function launchTray(rendererUrl: string): Promise<ChildProcess | null> {
+  const trayEntry = path.resolve(__dirname, "../../dist-electron/trayMain.js");
+  if (!existsSync(trayEntry)) {
+    log(`ℹ️ Tray unavailable — run "npm run build:electron" first, or pass --no-tray to hide this message`);
+    return null;
+  }
+
+  let electronPath: string;
+  try {
+    electronPath = (await import("electron")).default as unknown as string;
+  } catch {
+    log(`ℹ️ Tray unavailable — the "electron" package isn't installed`);
+    return null;
+  }
+
+  const child = spawn(electronPath, [trayEntry], {
+    env: { ...process.env, FRIEND_IN_MD_SERVER_URL: rendererUrl },
+    stdio: "inherit",
+  });
+  child.on("error", (err) => log(`⚠️ Could not start the tray: ${(err as Error).message}`));
+  return child;
 }
 
 async function main(): Promise<void> {
   const opts = parseArgs(process.argv.slice(2));
 
-  const state = new ServerState();
-
-  if (opts.dir) {
-    if (!existsSync(opts.dir)) {
-      console.error(`Directory not found: ${opts.dir}`);
-      process.exit(1);
-    }
-    await state.setRoot(opts.dir);
-  }
-
-  // Encoded PlantUML diagrams can run to several hundred/thousand chars -
-  // well past find-my-way's default 100-char param limit, which silently
-  // 404s the route instead of erroring loudly.
-  // The raw pino per-request logger is opt-in via --verbose: end users get
-  // the friendly emoji log below instead, which is what matters day to day.
-  const app = Fastify({ logger: opts.verbose, maxParamLength: 20000 });
-
-  if (opts.dev) {
-    await app.register(fastifyCors, { origin: true });
-  }
-
-  registerRootRoutes(app, state);
-  registerFileRoutes(app, state);
-  registerLockRoutes(app, state);
-  registerSearchRoutes(app, state);
-  registerDiagramRoutes(app);
-  registerAssetRoutes(app, state);
-  registerReadmeRoutes(app);
-  registerEventRoutes(app, state);
-
-  const clientDist = path.resolve(__dirname, "../../dist-client");
-  if (!opts.dev && existsSync(clientDist)) {
-    await app.register(fastifyStatic, { root: clientDist });
-    app.setNotFoundHandler((req, reply) => {
-      if (req.raw.url?.startsWith("/api")) {
-        reply.code(404).send({ error: "Not found" });
-        return;
-      }
-      reply.sendFile("index.html");
+  let server;
+  try {
+    server = await createServer({
+      dir: opts.dir,
+      port: opts.port,
+      dev: opts.dev,
+      verbose: opts.verbose,
     });
+  } catch (err) {
+    console.error((err as Error).message);
+    process.exit(1);
   }
 
-  const actualPort = await listenOnFreePort(app, opts.port);
-  const url = `http://127.0.0.1:${actualPort}`;
-  log(`🚀 You've got a friend in md is running at ${url}`);
-  if (!state.ctx) {
-    log(`📁 No folder selected yet — pick one in the browser`);
-  }
   if (!opts.verbose) {
     log(`ℹ️ Run with --verbose to see detailed request logs`);
   }
 
+  let trayProcess: ChildProcess | null = null;
+  if (opts.tray) {
+    const rendererUrl = opts.dev ? VITE_DEV_URL : server.url;
+    if (opts.dev) await waitForUrl(rendererUrl);
+    trayProcess = await launchTray(rendererUrl);
+  }
+
   if (opts.open && !opts.dev) {
-    await open(url);
+    await open(server.url);
   }
 
   const shutdown = async () => {
-    await state.close();
-    await app.close();
+    trayProcess?.kill();
+    await server.stop();
     process.exit(0);
   };
   process.on("SIGINT", shutdown);

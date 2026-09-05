@@ -1,6 +1,10 @@
 node_modules/
 dist-server/
 dist-client/
+dist-electron/
+release/
+electron/assets/icons/
 *.log
 .DS_Store
 .mdnote/
+.friend-in-md/

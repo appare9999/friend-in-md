@@ -1,5 +1,13 @@
 export type FileKind = "markdown" | "csv";
 
+// CSV is rendered as an in-memory grid of editable DOM cells, which doesn't
+// scale the way a text/WYSIWYG editor does - files past the configured limit
+// are blocked from opening instead. The limit is user-adjustable (Settings),
+// bounded by MIN/MAX below, and enforced server-side on every request.
+export const DEFAULT_CSV_LIMIT_BYTES = 500 * 1024; // 500 KB
+export const MIN_CSV_LIMIT_BYTES = 100 * 1024; // 100 KB
+export const MAX_CSV_LIMIT_BYTES = 10 * 1024 * 1024; // 10 MB
+
 export interface FileTreeNode {
   name: string;
   path: string; // posix-style, relative to the served root
@@ -81,6 +89,16 @@ export interface SearchResultItem {
 export interface SearchResponse {
   query: string;
   results: SearchResultItem[];
+}
+
+export interface QuickNoteSummary {
+  path: string;
+  title: string;
+}
+
+export interface QuickNoteListResponse {
+  notes: QuickNoteSummary[];
+  rootOpen: boolean;
 }
 
 export type ServerEvent =

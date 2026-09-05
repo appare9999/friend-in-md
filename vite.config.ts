@@ -13,6 +13,12 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist-client"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, "src/client/index.html"),
+        "quick-note": path.resolve(__dirname, "src/client/quick-note.html"),
+      },
+    },
   },
   server: {
     port: 5180,

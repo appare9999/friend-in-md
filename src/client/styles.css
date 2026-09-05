@@ -1,9 +1,27 @@
 * { box-sizing: border-box; }
+:root {
+  --app-font-family: "Meiryo", "Yu Gothic UI", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Rounded Mplus 1c",
+    "Segoe UI", -apple-system, sans-serif;
+  /* Matches the editor pane's pre-existing fixed width - kept as the default
+     so PlantUML/other wide diagrams aren't squeezed unless the user opts
+     into a narrower reading width via Settings. */
+  --content-max-width: 1100px;
+}
 body {
   margin: 0;
-  font-family: "Meiryo", "Yu Gothic UI", "Hiragino Maru Gothic ProN", "BIZ UDPGothic", "Rounded Mplus 1c",
-    "Segoe UI", -apple-system, sans-serif;
+  font-family: var(--app-font-family);
   color: #1a1a1a;
+}
+
+/* Milkdown's Crepe theme redefines --crepe-font-default/--crepe-font-title
+   on .milkdown itself (see @milkdown/crepe/theme/frame/style.css), so the
+   rendered markdown ignores the font inherited from body. ".app .milkdown"
+   outranks ".milkdown" on specificity, so this wins regardless of CSS
+   import order and keeps the editor's rendered text following the font
+   picker. */
+.app .milkdown {
+  --crepe-font-default: var(--app-font-family);
+  --crepe-font-title: var(--app-font-family);
 }
 
 .app {
@@ -92,11 +110,8 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
-.sidebar-title {
+.sidebar-header-spacer {
   flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .sidebar.collapsed .sidebar-header {
@@ -117,6 +132,45 @@ body {
 }
 
 .sidebar-toggle-btn:hover { background: #eee; }
+
+.sidebar-settings-btn {
+  flex: none;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: #555;
+}
+
+.sidebar-settings-btn:hover { background: #eee; }
+
+.sidebar-settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  background: #f5f5f5;
+}
+
+.settings-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-settings-panel input[type="range"] {
+  width: 100%;
+}
+
+.sidebar-settings-panel select {
+  padding: 3px 6px;
+}
 
 .change-folder-btn {
   background: none;
@@ -226,6 +280,22 @@ body {
 .root-picker-recents ul {
   list-style: none;
   padding: 0;
+  margin: 0 0 20px;
+}
+
+.root-picker-recents li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.root-picker-recents li button:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 
 .root-picker-recents button {
@@ -237,6 +307,17 @@ body {
   color: #0056d6;
   cursor: pointer;
 }
+
+.root-picker-recents button:disabled { opacity: 0.5; cursor: default; }
+
+.remove-recent-btn {
+  flex: none;
+  color: #999 !important;
+  font-family: inherit !important;
+  padding: 0 4px !important;
+}
+
+.remove-recent-btn:hover { color: #c0392b !important; }
 
 .readme-accordion {
   margin-top: 24px;
@@ -361,11 +442,31 @@ body {
 .tree { padding-left: 8px; }
 
 .tree-dir-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
   padding: 4px 8px;
   font-weight: 600;
   color: #555;
   font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 4px;
 }
+
+.tree-dir-label:hover { background: #eee; }
+
+.tree-dir-caret {
+  display: inline-block;
+  transition: transform 0.15s ease;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.tree-dir-caret.open { transform: rotate(90deg); }
 
 .tree-file {
   display: block;
@@ -413,6 +514,18 @@ body {
   flex: 1;
 }
 
+.marp-theme-picker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.marp-theme-picker select {
+  padding: 3px 6px;
+}
+
 .toolbar-editing, .toolbar-locked {
   display: flex;
   align-items: center;
@@ -443,7 +556,7 @@ body {
 
 .editor-pane .milkdown {
   height: 100%;
-  max-width: 1100px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
 }
 
@@ -453,6 +566,14 @@ body {
   padding: 8px 12px 40vh !important;
 }
 
+.marp-slide-view-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #666;
+}
+
 /* Crepe's default table border (--crepe-color-outline at 80% transparent) is too faint */
 .milkdown .milkdown-table-block th,
 .milkdown .milkdown-table-block td {
@@ -460,7 +581,10 @@ body {
 }
 
 .csv-editor {
-  padding: 8px 12px;
+  /* Bottom padding mirrors the markdown editor's ProseMirror padding-bottom
+     trick above - it lets the last row scroll up to the middle of the
+     viewport instead of being stuck at the bottom edge. */
+  padding: 8px 12px 40vh;
 }
 
 .csv-toolbar {
@@ -531,7 +655,61 @@ body {
 }
 
 .csv-row-handle:hover { background: #eee; color: #555; }
-.csv-row-handle.selected { background: #dbe9ff; color: #0056d6; font-weight: 600; }
+.csv-row-handle.active { background: #dbe9ff; color: #0056d6; font-weight: 600; }
+
+.csv-row-handle-spacer {
+  width: 32px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+}
+
+.csv-column-handle {
+  text-align: center;
+  background: #fafafa;
+  color: #999;
+  font-size: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 4px;
+}
+
+.csv-column-handle:hover { background: #eee; color: #555; }
+.csv-column-handle.active { background: #dbe9ff; color: #0056d6; font-weight: 600; }
+
+.csv-toolbar-hint {
+  align-self: center;
+  color: #888;
+  font-size: 0.75rem;
+}
+
+.csv-context-menu {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  gap: 2px;
+}
+
+.csv-context-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.csv-context-menu button:hover { background: #eee; }
+.csv-context-menu button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .col-resize-handle {
   position: absolute;
@@ -833,4 +1011,38 @@ body {
   font-size: 0.78rem;
   color: #888;
   text-align: right;
+}
+
+/* PDF export prints only the note content - chrome (sidebar, toolbar, TOC,
+   modals) is hidden and the scrollable editor pane is expanded to full
+   height so the browser's print engine can paginate the whole document. */
+@media print {
+  .sidebar,
+  .toc-sidebar,
+  .toolbar,
+  .modal-backdrop {
+    display: none !important;
+  }
+
+  .app {
+    height: auto;
+    display: block;
+  }
+
+  .main {
+    display: block;
+  }
+
+  .editor-pane {
+    overflow: visible;
+    height: auto;
+  }
+
+  .editor-pane .milkdown {
+    max-width: none;
+  }
+
+  .editor-pane .milkdown .ProseMirror {
+    padding-bottom: 0 !important;
+  }
 }

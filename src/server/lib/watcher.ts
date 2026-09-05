@@ -2,6 +2,7 @@ import chokidar, { type FSWatcher } from "chokidar";
 import path from "node:path";
 import { EventEmitter } from "node:events";
 import type { ServerEvent } from "../../shared/types.js";
+import { fileKindFor } from "./fileTree.js";
 
 export class Watcher extends EventEmitter {
   private readonly fsWatcher: FSWatcher;
@@ -40,7 +41,7 @@ export class Watcher extends EventEmitter {
   }
 
   private handle(absPath: string, kind: "tree" | "file"): void {
-    if (path.extname(absPath).toLowerCase() !== ".md" && kind === "file") return;
+    if (kind === "file" && !fileKindFor(path.extname(absPath).toLowerCase())) return;
     const relPath = path.relative(this.root, absPath).split(path.sep).join("/");
     if (kind === "tree") {
       this.emitEvent({ type: "tree-changed" });

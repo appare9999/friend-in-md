@@ -1,27 +1,29 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { DEFAULT_CSV_LIMIT_BYTES, MAX_CSV_LIMIT_BYTES, MIN_CSV_LIMIT_BYTES } from "../../shared/types.js";
 import type { FileKind, FileTreeNode } from "../../shared/types.js";
 
 const IGNORED = new Set(["node_modules", ".git", ".friend-in-md"]);
 const MARKDOWN_EXT = new Set([".md", ".markdown"]);
 const CSV_EXT = new Set([".csv"]);
 
-// CSV is rendered as an in-memory grid of editable DOM cells, which doesn't
-// scale the way a text/WYSIWYG editor does - block anything past this size
-// instead of trying to open it.
-export const MAX_CSV_BYTES = 2 * 1024 * 1024; // 2 MB
+export function clampCsvLimitBytes(raw: unknown): number {
+  const n = typeof raw === "string" ? Number(raw) : NaN;
+  if (!Number.isFinite(n) || n <= 0) return DEFAULT_CSV_LIMIT_BYTES;
+  return Math.min(MAX_CSV_LIMIT_BYTES, Math.max(MIN_CSV_LIMIT_BYTES, Math.floor(n)));
+}
 
 function toPosix(p: string): string {
   return p.split(path.sep).join("/");
 }
 
-function fileKindFor(ext: string): FileKind | null {
+export function fileKindFor(ext: string): FileKind | null {
   if (MARKDOWN_EXT.has(ext)) return "markdown";
   if (CSV_EXT.has(ext)) return "csv";
   return null;
 }
 
-async function walk(root: string, relDir: string): Promise<FileTreeNode[]> {
+async function walk(root: string, relDir: string, maxCsvBytes: number): Promise<FileTreeNode[]> {
   const absDir = path.join(root, relDir);
   let entries;
   try {
@@ -38,7 +40,7 @@ async function walk(root: string, relDir: string): Promise<FileTreeNode[]> {
     const relPath = relDir ? `${relDir}/${entry.name}` : entry.name;
 
     if (entry.isDirectory()) {
-      const children = await walk(root, relPath);
+      const children = await walk(root, relPath, maxCsvBytes);
       if (children.length > 0) {
         nodes.push({ name: entry.name, path: toPosix(relPath), type: "dir", children });
       }
@@ -53,7 +55,7 @@ async function walk(root: string, relDir: string): Promise<FileTreeNode[]> {
     if (fileKind === "csv") {
       try {
         const stat = await fs.stat(path.join(absDir, entry.name));
-        tooLarge = stat.size > MAX_CSV_BYTES;
+        tooLarge = stat.size > maxCsvBytes;
       } catch {
         continue;
       }
@@ -64,8 +66,8 @@ async function walk(root: string, relDir: string): Promise<FileTreeNode[]> {
   return nodes;
 }
 
-export async function buildFileTree(root: string): Promise<FileTreeNode[]> {
-  return walk(root, "");
+export async function buildFileTree(root: string, maxCsvBytes: number = DEFAULT_CSV_LIMIT_BYTES): Promise<FileTreeNode[]> {
+  return walk(root, "", maxCsvBytes);
 }
 
 export function resolveWithinRoot(root: string, relPath: string): string {

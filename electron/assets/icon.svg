@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6EC6C0"/>
+      <stop offset="1" stop-color="#4AA6A0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#bg)"/>
+
+  <!-- folded note card -->
+  <path d="M 140 150 L 320 150 L 372 202 L 372 372 Q 372 388 356 388 L 140 388 Q 124 388 124 372 L 124 166 Q 124 150 140 150 Z"
+        fill="#FDFBF5" stroke="#2E6E68" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M 320 150 L 320 194 Q 320 202 328 202 L 372 202 Z" fill="#E7E2D3" stroke="#2E6E68" stroke-width="10" stroke-linejoin="round"/>
+
+  <!-- friendly face -->
+  <circle cx="200" cy="290" r="14" fill="#2E6E68"/>
+  <circle cx="288" cy="290" r="14" fill="#2E6E68"/>
+  <path d="M 190 330 Q 244 366 298 330" fill="none" stroke="#2E6E68" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- note lines -->
+  <line x1="164" y1="230" x2="228" y2="230" stroke="#2E6E68" stroke-width="8" stroke-linecap="round" opacity="0.35"/>
+  <line x1="266" y1="230" x2="330" y2="230" stroke="#2E6E68" stroke-width="8" stroke-linecap="round" opacity="0.35"/>
+</svg>
