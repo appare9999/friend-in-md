@@ -1,0 +1,46 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - button "«" [expanded] [ref=e6] [cursor=pointer]
+      - generic "/tmp/marp_present_test3"
+      - button "📝 Quick note" [ref=e7] [cursor=pointer]
+      - button "⚙" [ref=e8] [cursor=pointer]
+      - button "Change folder" [ref=e9] [cursor=pointer]
+    - generic "/tmp/marp_present_test3" [ref=e10]
+    - searchbox "Search markdown files…" [ref=e12]
+    - list [ref=e15]:
+      - listitem [ref=e16]:
+        - button "🔒deck.md" [ref=e17] [cursor=pointer]
+  - main [ref=e13]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: deck.md
+      - generic [ref=e20]:
+        - text: "Theme:"
+        - combobox "Theme:" [ref=e21]:
+          - option "default"
+          - option "gaia" [selected]
+          - option "uncover"
+      - button "🖨 Export PDF" [ref=e22]
+      - button "🎞 Export PowerPoint" [ref=e23]
+      - button "▶ Present" [active] [ref=e24]
+    - generic [ref=e27]:
+      - iframe [ref=e28]:
+        - img [ref=f2e3]:
+          - generic [ref=f2e5]:
+            - heading "Slide One" [level=1] [ref=f2e6]
+            - paragraph [ref=f2e7]: Content of slide one.
+      - generic [ref=e29]:
+        - button "◀" [disabled] [ref=e30]
+        - generic [ref=e31]: 1 / 2
+        - button "▶" [ref=e32] [cursor=pointer]
+        - button "✕ Exit" [ref=e33] [cursor=pointer]
+    - iframe [ref=e26]:
+      - generic [ref=f1e2]:
+        - img [ref=f1e3]:
+          - generic [ref=f1e5]:
+            - heading "Slide One" [level=1] [ref=f1e6]
+            - paragraph [ref=f1e7]: Content of slide one.
+        - img [ref=f1e8]:
+          - generic [ref=f1e10]:
+            - heading "Slide Two" [level=1] [ref=f1e11]
+            - paragraph [ref=f1e12]: Content of slide two.

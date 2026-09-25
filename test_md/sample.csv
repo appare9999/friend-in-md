@@ -1,0 +1,10 @@
+id,name,category,price,stock,released,note,test
+1,Apple,Fruit,120,35,2026-08-01,Grown in Aomori,35
+2,Banana,Fruit,98,120,2026-08-03,,36
+3,"Tomato, large",Vegetable,150,0,2026-08-05,Out of stock,37
+4,Milk 1L,Dairy,215,48,2026-08-10,"He said ""fresh"" today",38
+5,Bread,Bakery,180,22,2026-08-12,"Note with
+a line break",39
+6,Coffee beans (200g),Beverage,1280,7,2026-09-01,,40
+7,,Uncategorized,,,,Row with many blanks,41
+8,Very long product name to check how wide columns are rendered in the table view,Other,99999,1,2026-09-20,Long text,42

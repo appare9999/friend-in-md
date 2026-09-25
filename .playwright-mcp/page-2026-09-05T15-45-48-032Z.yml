@@ -1,0 +1,20 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - iframe [ref=e14]:
+      - img [ref=f2e3]:
+        - generic [ref=f2e5]:
+          - heading "Slide One" [level=1] [ref=f2e6]
+          - paragraph [ref=f2e7]: Content of slide one.
+    - paragraph [ref=e7]: Script for slide one.
+  - generic [ref=e8]:
+    - generic [ref=e9]: 00:30
+    - generic [ref=e10]: 1 / 2
+    - generic [ref=e15]: Next
+    - iframe [ref=e16]:
+      - img [ref=f3e3]:
+        - generic [ref=f3e5]:
+          - heading "Slide Two" [level=1] [ref=f3e6]
+          - paragraph [ref=f3e7]: Content of slide two.
+    - generic [ref=e11]:
+      - button "◀ Prev" [disabled] [ref=e12]
+      - button "Next ▶" [ref=e13] [cursor=pointer]

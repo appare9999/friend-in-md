@@ -17,7 +17,10 @@ import { registerReadmeRoutes } from "./routes/readme.js";
 import { registerExportRoutes } from "./routes/export.js";
 import { registerMarpThemeRoutes } from "./routes/marpTheme.js";
 import { registerQuickNoteRoutes } from "./routes/quickNotes.js";
+import { loadLastPort, saveLastPort } from "./lib/portStore.js";
 import { log } from "./lib/log.js";
+
+const DEFAULT_PORT = 4317;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -56,11 +59,12 @@ async function listenOnFreePort(
 }
 
 export async function createServer(opts: CreateServerOptions = {}): Promise<FriendInMdServer> {
-  const port = opts.port ?? 4317;
+  const port = opts.port ?? (await loadLastPort()) ?? DEFAULT_PORT;
   const dev = opts.dev ?? false;
   const verbose = opts.verbose ?? false;
 
   const state = new ServerState();
+  await state.initQuickNotes();
 
   if (opts.dir) {
     if (!existsSync(opts.dir)) {
@@ -105,6 +109,10 @@ export async function createServer(opts: CreateServerOptions = {}): Promise<Frie
   }
 
   const actualPort = await listenOnFreePort(app, port);
+  // Only a hint for the next launch - never worth failing startup over.
+  await saveLastPort(actualPort).catch((err) => {
+    log(`⚠️ Could not remember port ${actualPort}: ${(err as Error).message}`);
+  });
   const url = `http://127.0.0.1:${actualPort}`;
   log(`🚀 You've got a friend in md is running at ${url}`);
   if (!state.ctx) {

@@ -4,7 +4,6 @@
   "description": "Browse and edit a directory of markdown and csv files in a rich WYSIWYG browser UI; files default to locked and must be explicitly unlocked before editing.",
   "license": "MIT",
   "type": "module",
-  "main": "dist-electron/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/appare9999/friend-in-md.git",
@@ -16,35 +15,26 @@
   "files": [
     "bin",
     "dist-server",
-    "dist-client",
-    "dist-electron"
+    "dist-client"
   ],
   "scripts": {
-    "dev": "npm run build:electron && concurrently -n server,client -c blue,green \"npm:dev:server\" \"npm:dev:client\"",
+    "dev": "node scripts/dev.mjs",
     "dev:server": "tsx watch src/server/index.ts --dev",
     "dev:client": "vite",
     "build:server": "tsc -p tsconfig.server.json",
     "build:client": "vite build",
     "build": "npm run build:server && npm run build:client",
-    "prepublishOnly": "npm run icons && npm run build && npm run build:electron",
+    "prepublishOnly": "npm run icons && npm run build",
     "start": "node bin/cli.js",
-    "typecheck": "tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.json --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "typecheck": "tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.json --noEmit",
     "icons": "node scripts/generate-icons.mjs",
-    "build:electron": "tsc -p tsconfig.electron.json && node scripts/copy-electron-assets.mjs",
-    "build:all": "npm run build && npm run build:electron",
-    "electron": "npm run build:all && electron .",
-    "dist:electron": "npm run icons && npm run build:all && electron-builder",
-    "build:server:watch": "tsc -p tsconfig.server.json --watch --preserveWatchOutput",
-    "build:electron:watch": "tsc -p tsconfig.electron.json --watch --preserveWatchOutput",
-    "electron:dev": "npm run build:all && concurrently -n server,client,electron-ts,electron -c blue,green,yellow,magenta \"npm:build:server:watch\" \"npm:dev:client\" \"npm:build:electron:watch\" \"npm:electron:dev:launch\"",
-    "electron:dev:launch": "wait-on tcp:5180 && cross-env FRIEND_IN_MD_DEV_SERVER_URL=http://localhost:5180 electronmon dist-electron/main.js"
+    "build:server:watch": "tsc -p tsconfig.server.json --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
     "@fastify/static": "^7.0.4",
     "@marp-team/marp-cli": "^4.5.0",
     "chokidar": "^3.6.0",
-    "electron": "^44.1.1",
     "fastify": "^4.28.1",
     "open": "^10.1.0"
   },
@@ -61,57 +51,19 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "concurrently": "^8.2.2",
-    "cross-env": "^10.1.0",
-    "electron-builder": "^26.15.3",
-    "electronmon": "^2.0.4",
     "katex": "^0.17.0",
     "markdown-it": "^15.0.1",
     "mermaid": "^11.16.0",
     "papaparse": "^5.4.1",
     "plantuml-encoder": "^1.4.0",
-    "png2icons": "^2.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.35.4",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "wait-on": "^9.1.0"
+    "vite": "^5.3.4"
   },
   "engines": {
     "node": ">=18"
-  },
-  "build": {
-    "appId": "com.appare9999.friend-in-md",
-    "productName": "Friend in MD",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist-electron/**/*",
-      "dist-server/**/*",
-      "dist-client/**/*",
-      "package.json"
-    ],
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "electron/assets/icons/icon.ico"
-    },
-    "mac": {
-      "target": [
-        "dmg"
-      ],
-      "icon": "electron/assets/icons/icon.icns",
-      "category": "public.app-category.productivity"
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "icon": "electron/assets/icons/icon-512.png",
-      "category": "Office"
-    }
   }
 }

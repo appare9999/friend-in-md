@@ -172,7 +172,18 @@ body {
   padding: 3px 6px;
 }
 
-.change-folder-btn {
+.quick-note-folder-current {
+  font-size: 0.75rem;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.change-folder-btn,
+.parent-folder-btn,
+.quick-note-launch-btn,
+.quick-note-folder-browse-btn {
   background: none;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -180,6 +191,11 @@ body {
   font-size: 0.75rem;
   font-weight: 400;
   cursor: pointer;
+}
+
+.parent-folder-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .sidebar-root-path {
@@ -201,6 +217,18 @@ body {
 
 .root-picker h1 {
   margin-bottom: 4px;
+}
+
+.root-picker-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.root-picker-logo {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
 }
 
 .native-picker-btn {
@@ -561,9 +589,13 @@ body {
 }
 
 /* Crepe's theme sets a large 60px/120px padding directly on .ProseMirror,
-   which the outer .milkdown padding above doesn't reach. */
+   which the outer .milkdown padding above doesn't reach. Left padding must
+   stay >= ~76px: the block-edit "+"/drag handle floats to the left of each
+   block via floating-ui, positioned outside the block's own box, and
+   .editor-pane's overflow-y (which per spec forces overflow-x to clip too)
+   hides it entirely if there isn't room for it inside that padding. */
 .editor-pane .milkdown .ProseMirror {
-  padding: 8px 12px 40vh !important;
+  padding: 8px 12px 40vh 80px !important;
 }
 
 .marp-slide-view-frame {
@@ -572,6 +604,65 @@ body {
   height: 100%;
   border: none;
   background: #666;
+}
+
+.marp-presentation-view {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.marp-presentation-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background: #000;
+}
+
+.marp-presentation-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+}
+
+.marp-presentation-controls {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(20, 20, 20, 0.9);
+}
+
+.marp-presentation-controls button {
+  background: #333;
+  color: #eee;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.marp-presentation-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.marp-presentation-controls button:not(:disabled):hover {
+  border-color: #4aa6a0;
+}
+
+.marp-presentation-counter {
+  color: #ccc;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  min-width: 64px;
+  text-align: center;
 }
 
 /* Crepe's default table border (--crepe-color-outline at 80% transparent) is too faint */
@@ -837,6 +928,76 @@ body {
   width: auto;
 }
 
+.milkdown img {
+  cursor: zoom-in;
+}
+
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.92);
+  outline: none;
+}
+
+.image-viewer-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+
+.image-viewer-stage.dragging {
+  cursor: grabbing;
+}
+
+.image-viewer-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: none;
+  transform-origin: 0 0;
+  user-select: none;
+  image-rendering: auto;
+}
+
+.image-viewer-toolbar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(30, 30, 30, 0.85);
+  color: #fff;
+  font-size: 13px;
+}
+
+.image-viewer-toolbar button {
+  min-width: 32px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.image-viewer-toolbar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.image-viewer-scale {
+  min-width: 48px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1045,4 +1206,56 @@ body {
   .editor-pane .milkdown .ProseMirror {
     padding-bottom: 0 !important;
   }
+}
+
+.csv-cell.selected {
+  background: rgba(0, 86, 214, 0.1);
+}
+
+.csv-cell.fill-preview {
+  background: rgba(0, 86, 214, 0.05);
+  outline: 1px dashed #0056d6;
+  outline-offset: -1px;
+}
+
+.csv-fill-handle {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 7px;
+  height: 7px;
+  background: #0056d6;
+  border: 1px solid #fff;
+  cursor: crosshair;
+  z-index: 3;
+}
+
+/* While a range/fill drag is in progress, stop the browser from
+   highlighting text across cells. */
+.csv-dragging,
+.csv-dragging .csv-cell-input {
+  user-select: none;
+}
+
+.csv-context-menu-separator {
+  height: 1px;
+  margin: 2px 4px;
+  background: #e5e5e5;
+}
+
+.csv-status-bar {
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 15;
+  display: flex;
+  gap: 16px;
+  padding: 4px 12px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #555;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
 }

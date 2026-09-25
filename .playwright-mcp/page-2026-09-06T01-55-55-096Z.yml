@@ -1,0 +1,15 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - button "«" [expanded] [ref=e6] [cursor=pointer]
+      - generic "/tmp/marp_present_test4"
+      - button "📝 Quick note" [ref=e7] [cursor=pointer]
+      - button "⚙" [ref=e8] [cursor=pointer]
+      - button "Change folder" [ref=e9] [cursor=pointer]
+    - generic "/tmp/marp_present_test4" [ref=e10]
+    - searchbox "Search markdown files…" [ref=e12]
+    - list [ref=e13]:
+      - listitem [ref=e14]:
+        - button "🔒deck.md" [ref=e15] [cursor=pointer]
+  - main [ref=e16]:
+    - generic [ref=e17]: Select a markdown file from the left.

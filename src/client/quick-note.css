@@ -39,6 +39,18 @@ body {
   height: 100%;
 }
 
+.quick-note-install-btn {
+  margin: 8px 10px 0;
+  align-self: flex-start;
+  border: 1px solid var(--qn-accent);
+  background: transparent;
+  color: var(--qn-fg);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
 .quick-note-switcher {
   display: flex;
   gap: 4px;

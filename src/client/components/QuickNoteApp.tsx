@@ -1,15 +1,30 @@
 import { useEffect, useMemo, useState } from "react";
 import MarkdownIt from "markdown-it";
-import { fetchFile, fetchQuickNotes } from "../http/client.js";
+import { fetchQuickNoteContent, fetchQuickNotes } from "../http/client.js";
 import { stripFrontmatter } from "../lib/quickNoteFormat.js";
 import type { QuickNoteSummary } from "@shared/types.js";
 
 const md = new MarkdownIt({ html: false, linkify: true, breaks: true });
+const defaultLinkOpen =
+  md.renderer.rules.link_open ??
+  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  token.attrSet("target", "_blank");
+  token.attrSet("rel", "noopener noreferrer");
+  return defaultLinkOpen(tokens, idx, options, env, self);
+};
 const LAST_NOTE_KEY = "friend-in-md:quickNote:lastPath";
+
+// Chromium's install prompt: fires only once the page meets its
+// installability criteria (manifest + registered service worker).
+interface BeforeInstallPromptEvent extends Event {
+  prompt(): Promise<void>;
+}
 
 type LoadState =
   | { status: "loading" }
-  | { status: "no-root" }
+  | { status: "no-folder" }
   | { status: "empty" }
   | { status: "ready"; notes: QuickNoteSummary[] };
 
@@ -18,14 +33,24 @@ export function QuickNoteApp() {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
   const [bodyHtml, setBodyHtml] = useState<string>("");
   const [contentError, setContentError] = useState<string | null>(null);
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const onBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e as BeforeInstallPromptEvent);
+    };
+    window.addEventListener("beforeinstallprompt", onBeforeInstall);
+    return () => window.removeEventListener("beforeinstallprompt", onBeforeInstall);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
     fetchQuickNotes()
       .then((res) => {
         if (cancelled) return;
-        if (!res.rootOpen) {
-          setState({ status: "no-root" });
+        if (!res.folderOpen) {
+          setState({ status: "no-folder" });
           return;
         }
         if (res.notes.length === 0) {
@@ -38,7 +63,7 @@ export function QuickNoteApp() {
         setSelectedPath(initial.path);
       })
       .catch(() => {
-        if (!cancelled) setState({ status: "no-root" });
+        if (!cancelled) setState({ status: "no-folder" });
       });
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -55,7 +80,7 @@ export function QuickNoteApp() {
     if (!selectedPath) return;
     let cancelled = false;
     setContentError(null);
-    fetchFile(selectedPath)
+    fetchQuickNoteContent(selectedPath)
       .then((res) => {
         if (cancelled) return;
         setBodyHtml(md.render(stripFrontmatter(res.content)));
@@ -75,11 +100,9 @@ export function QuickNoteApp() {
     return <div className="quick-note-empty">Loading…</div>;
   }
 
-  if (state.status === "no-root") {
+  if (state.status === "no-folder") {
     return (
-      <div className="quick-note-empty">
-        No folder open yet. Pick one from the tray menu's "Open notes folder…".
-      </div>
+      <div className="quick-note-empty">No quick-note folder set. Configure one in the main app's settings.</div>
     );
   }
 
@@ -94,6 +117,18 @@ export function QuickNoteApp() {
 
   return (
     <div className="quick-note-app">
+      {installPrompt && (
+        <button
+          className="quick-note-install-btn"
+          onClick={() => {
+            installPrompt.prompt();
+            setInstallPrompt(null);
+          }}
+          title="Install as a standalone app for quick access from your taskbar/dock"
+        >
+          📌 Install as app
+        </button>
+      )}
       {notes.length > 1 && (
         <div className="quick-note-switcher">
           {notes.map((note) => (

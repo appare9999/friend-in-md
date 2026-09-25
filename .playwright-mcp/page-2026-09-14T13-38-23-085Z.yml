@@ -1,0 +1,779 @@
+- generic [ref=f1e3]:
+  - complementary [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - button "«" [expanded] [ref=f1e6] [cursor=pointer]
+      - generic "/home/appare99/tools/nws"
+      - button "📝 Quick note" [ref=f1e7] [cursor=pointer]
+      - button "⚙" [ref=f1e8] [cursor=pointer]
+      - button "↑ Parent folder" [ref=f1e9] [cursor=pointer]
+      - button "Change folder" [ref=f1e10] [cursor=pointer]
+    - generic "/home/appare99/tools/nws" [ref=f1e11]
+    - searchbox "Search markdown files…" [ref=f1e13]
+    - list [ref=f1e16]:
+      - listitem [ref=f1e17]:
+        - button "▶ 2019" [expanded] [ref=f1e18] [cursor=pointer]:
+          - generic [ref=f1e19]: ▶
+          - text: "2019"
+        - list [ref=f1e20]:
+          - listitem [ref=f1e21]:
+            - button "▶ 2019_1" [expanded] [ref=f1e22] [cursor=pointer]:
+              - generic [ref=f1e23]: ▶
+              - text: 2019_1
+            - list [ref=f1e24]:
+              - listitem [ref=f1e25]:
+                - button "🔒2019r01a_nw_pm1_kaisetsu.md" [ref=f1e26] [cursor=pointer]
+              - listitem [ref=f1e27]:
+                - button "🔒2019r01a_nw_pm1_qs.md" [ref=f1e28] [cursor=pointer]
+          - listitem [ref=f1e29]:
+            - button "▶ 2019_2" [expanded] [ref=f1e30] [cursor=pointer]:
+              - generic [ref=f1e31]: ▶
+              - text: 2019_2
+            - list [ref=f1e32]:
+              - listitem [ref=f1e33]:
+                - button "🔒2019r01a_nw_pm2_kaisetsu.md" [ref=f1e34] [cursor=pointer]
+      - listitem [ref=f1e35]:
+        - button "▶ 2021" [expanded] [ref=f1e36] [cursor=pointer]:
+          - generic [ref=f1e37]: ▶
+          - text: "2021"
+        - list [ref=f1e38]:
+          - listitem [ref=f1e39]:
+            - button "▶ 2021_1" [expanded] [ref=f1e40] [cursor=pointer]:
+              - generic [ref=f1e41]: ▶
+              - text: 2021_1
+            - list [ref=f1e42]:
+              - listitem [ref=f1e43]:
+                - button "🔒解説.md" [ref=f1e44] [cursor=pointer]
+          - listitem [ref=f1e45]:
+            - button "▶ 2021_2" [expanded] [ref=f1e46] [cursor=pointer]:
+              - generic [ref=f1e47]: ▶
+              - text: 2021_2
+            - list [ref=f1e48]:
+              - listitem [ref=f1e49]:
+                - button "🔒解説.md" [ref=f1e50] [cursor=pointer]
+      - listitem [ref=f1e51]:
+        - button "▶ 2022" [expanded] [ref=f1e52] [cursor=pointer]:
+          - generic [ref=f1e53]: ▶
+          - text: "2022"
+        - list [ref=f1e54]:
+          - listitem [ref=f1e55]:
+            - button "▶ 2022_1" [expanded] [ref=f1e56] [cursor=pointer]:
+              - generic [ref=f1e57]: ▶
+              - text: 2022_1
+            - list [ref=f1e58]:
+              - listitem [ref=f1e59]:
+                - button "解説.md" [active] [ref=f1e60] [cursor=pointer]
+      - listitem [ref=f1e61]:
+        - button "🔒CLAUDE.md" [ref=f1e62] [cursor=pointer]
+  - main [ref=f1e14]:
+    - generic [ref=f1e63]:
+      - generic [ref=f1e64]: 2022/2022_1/解説.md
+      - button "🖨 Export PDF" [ref=f1e65]
+      - button "📐 LaTeX cheatsheet" [ref=f1e66] [cursor=pointer]
+      - generic [ref=f1e67]:
+        - generic [ref=f1e68]: ✏️ Editing
+        - button "↶ Undo" [ref=f1e69]
+        - button "↷ Redo" [ref=f1e70]
+        - button "🖼 Insert image" [ref=f1e71]
+        - button "Save" [ref=f1e72]
+        - button "Lock" [ref=f1e73]
+    - textbox [ref=f1e77]:
+      - heading "令和4年度 春期 ネットワークスペシャリスト試験 午後Ⅰ 問1・問2・問3 解説" [level=1] [ref=f1e78]
+      - paragraph [ref=f1e79]: 対象ファイル
+      - list [ref=f1e80]:
+        - listitem [ref=f1e82]:
+          - paragraph [ref=f1e90]:
+            - text: "問題:"
+            - code [ref=f1e91]: pm1_1.pdf
+            - text: （問1 ネットワークの更改）,
+            - code [ref=f1e92]: pm1_2.pdf
+            - text: （問2 セキュアゲートウェイサービスの導入）,
+            - code [ref=f1e93]: pm1_3.pdf
+            - text: （問3 シングルサインオンの導入）
+        - listitem [ref=f1e95]:
+          - paragraph [ref=f1e103]:
+            - text: "解答:"
+            - code [ref=f1e104]: 2022r04h_nw_pm1_ans.pdf
+      - paragraph [ref=f1e105]: この解説では、まず3問に共通・関連する用語を整理し、そのあとで問題文の構成図をPlantUMLで描き直しながら、設問ごとに「なぜその答えになるのか」を本文の根拠つきで説明します。
+      - paragraph [ref=f1e106]: 各表の「区分」列は次の意味です。
+      - list [ref=f1e107]:
+        - listitem [ref=f1e109]:
+          - paragraph [ref=f1e117]:
+            - strong [ref=f1e118]: ①
+            - text: ": 問題文中に定義・説明がある用語（本文や図の注記を読めば意味が分かるもの）"
+        - listitem [ref=f1e120]:
+          - paragraph [ref=f1e128]:
+            - strong [ref=f1e129]: ②
+            - text: ": 問題文には説明がなく、前提知識として知っておく必要がある用語（一般的なネットワーク技術の知識）"
+      - separator [ref=f1e130]
+      - heading "0. 用語辞典" [level=2] [ref=f1e131]
+      - heading "問1（ネットワークの更改）で登場する用語" [level=3] [ref=f1e132]
+      - generic [ref=f1e143]:
+        - button [ref=f1e144] [cursor=pointer]
+        - button [ref=f1e149] [cursor=pointer]
+        - table [ref=f1e154]:
+          - rowgroup [ref=f1e155]:
+            - row [ref=f1e156]:
+              - columnheader [ref=f1e157]:
+                - paragraph [ref=f1e158]: 区分
+              - columnheader [ref=f1e159]:
+                - paragraph [ref=f1e160]: 用語
+              - columnheader [ref=f1e161]:
+                - paragraph [ref=f1e162]: 説明
+            - row [ref=f1e163]:
+              - cell [ref=f1e164]:
+                - paragraph [ref=f1e165]: ①
+              - cell [ref=f1e166]:
+                - paragraph [ref=f1e167]: OAセグメント／DMZ／制御セグメント／管理セグメント
+              - cell [ref=f1e168]:
+                - paragraph [ref=f1e169]: 本文冒頭で定義される、A社ネットワークの区画名。OAセグメント＝メール・資料作成等の事務作業用、DMZ＝社外との通信を行う区画、制御セグメント＝センサ・工作機械の制御用、管理セグメント＝ログ・測定データの管理用。
+            - row [ref=f1e170]:
+              - cell [ref=f1e171]:
+                - paragraph [ref=f1e172]: ②
+              - cell [ref=f1e173]:
+                - paragraph [ref=f1e174]: Syslog（RFC 5424）
+              - cell [ref=f1e175]:
+                - paragraph [ref=f1e176]: ログメッセージを別のサーバへ転送するための標準プロトコル。RFC 5424は「The Syslog Protocol」そのものを定めた規格書であり、規格名を知っていれば空欄aが埋まる。
+            - row [ref=f1e177]:
+              - cell [ref=f1e178]:
+                - paragraph [ref=f1e179]: ②
+              - cell [ref=f1e180]:
+                - paragraph [ref=f1e181]: Basic認証／ダイジェスト認証
+              - cell [ref=f1e182]:
+                - paragraph [ref=f1e183]: HTTPの標準的なユーザ認証方式。Basic認証はID:PWをBase64エンコードするだけ（平文に近い）。ダイジェスト認証はパスワードをMD5やSHA-256でハッシュ化してから送るため、Basic認証より安全。本文の「Base64でエンコードする…」「MD5やSHA-256でハッシュ化する…」という対比がヒントになる。
+            - row [ref=f1e184]:
+              - cell [ref=f1e185]:
+                - paragraph [ref=f1e186]: ②
+              - cell [ref=f1e187]:
+                - paragraph [ref=f1e188]: HTTP CONNECTメソッド
+              - cell [ref=f1e189]:
+                - paragraph [ref=f1e190]: プロキシサーバに、TCPコネクションをそのまま中継（トンネリング）させるためのHTTPメソッド。HTTPS通信をプロキシ経由させるときに使われ、宛先ポートは443に限定されるのが一般的。
+            - row [ref=f1e191]:
+              - cell [ref=f1e192]:
+                - paragraph [ref=f1e193]: ①
+              - cell [ref=f1e194]:
+                - paragraph [ref=f1e195]: LDAP（Lightweight Directory Access Protocol）
+              - cell [ref=f1e196]:
+                - paragraph [ref=f1e197]: 図1の注記に定義あり。ディレクトリサービスにアクセスするためのプロトコル。本文では内部メールサーバとプロキシサーバがユーザ認証のために参照する。
+            - row [ref=f1e198]:
+              - cell [ref=f1e199]:
+                - paragraph [ref=f1e200]: ①
+              - cell [ref=f1e201]:
+                - paragraph [ref=f1e202]: FTA（ファイル転送アプライアンス）
+              - cell [ref=f1e203]:
+                - paragraph [ref=f1e204]: 本文に定義あり。「分離された二つのネットワークでルーティングすることなくファイルの受渡しができるアプライアンス」。
+            - row [ref=f1e205]:
+              - cell [ref=f1e206]:
+                - paragraph [ref=f1e207]: ①
+              - cell [ref=f1e208]:
+                - paragraph [ref=f1e209]: NPB（ネットワークパケットブローカ）
+              - cell [ref=f1e210]:
+                - paragraph [ref=f1e211]: 本文に定義あり。「事前に入力ポート、出力ポートを設定し、入力したパケットを複数の出力ポートに複製する装置」。
+            - row [ref=f1e212]:
+              - cell [ref=f1e213]:
+                - paragraph [ref=f1e214]: ①
+              - cell [ref=f1e215]:
+                - paragraph [ref=f1e216]: ネットワークタップ
+              - cell [ref=f1e217]:
+                - paragraph [ref=f1e218]: 本文に定義あり。「既存の配線にインラインで接続し、パケットをNPBに複製する装置」。送信側・受信側それぞれの配線から複製するため入力ポートが2つ必要、と明記されている。
+            - row [ref=f1e219]:
+              - cell [ref=f1e220]:
+                - paragraph [ref=f1e221]: ②
+              - cell [ref=f1e222]:
+                - paragraph [ref=f1e223]: ミラーポート（SPANポート）
+              - cell [ref=f1e224]:
+                - paragraph [ref=f1e225]: L2SWの特定ポートを流れるフレームを、送信側・受信側ともに複製して別ポートへ出力する機能。1ポートに集約されるため帯域は物理ポート1本分（今回は1000BASE-SX＝1Gbps）に制限される。
+            - row [ref=f1e226]:
+              - cell [ref=f1e227]:
+                - paragraph [ref=f1e228]: ②
+              - cell [ref=f1e229]:
+                - paragraph [ref=f1e230]: プロミスキャスモード
+              - cell [ref=f1e231]:
+                - paragraph [ref=f1e232]: NICが本来受け取らない「自分宛てでないフレーム」も含めて全て受信するモード。パケットキャプチャを行うサーバ（可視化サーバ・キャプチャサーバ）で必須となる設定。
+            - row [ref=f1e233]:
+              - cell [ref=f1e234]:
+                - paragraph [ref=f1e235]: ②
+              - cell [ref=f1e236]:
+                - paragraph [ref=f1e237]: フラッディング
+              - cell [ref=f1e238]:
+                - paragraph [ref=f1e239]: L2SWが宛先MACアドレスをMACアドレステーブルに学習していないとき、受信ポート以外の全ポートにフレームを転送する動作。
+      - heading "問2（セキュアゲートウェイサービスの導入）で登場する用語" [level=3] [ref=f1e240]
+      - generic [ref=f1e251]:
+        - button [ref=f1e252] [cursor=pointer]
+        - button [ref=f1e257] [cursor=pointer]
+        - table [ref=f1e262]:
+          - rowgroup [ref=f1e263]:
+            - row [ref=f1e264]:
+              - columnheader [ref=f1e265]:
+                - paragraph [ref=f1e266]: 区分
+              - columnheader [ref=f1e267]:
+                - paragraph [ref=f1e268]: 用語
+              - columnheader [ref=f1e269]:
+                - paragraph [ref=f1e270]: 説明
+            - row [ref=f1e271]:
+              - cell [ref=f1e272]:
+                - paragraph [ref=f1e273]: ①
+              - cell [ref=f1e274]:
+                - paragraph [ref=f1e275]: SGWサービス（セキュアゲートウェイサービス）
+              - cell [ref=f1e276]:
+                - paragraph [ref=f1e277]: 本文に定義あり。「PCがインターネット上のサイトに接続する際に、送受信するパケットを本サービス経由とすることによって、ファイアウォール機能などの情報セキュリティ機能を提供する」。
+            - row [ref=f1e278]:
+              - cell [ref=f1e279]:
+                - paragraph [ref=f1e280]: ①
+              - cell [ref=f1e281]:
+                - paragraph [ref=f1e282]: トンネルIF
+              - cell [ref=f1e283]:
+                - paragraph [ref=f1e284]: 本文に定義あり。「IPsec VPNを確立したときに有効化される仮想インタフェース」。
+            - row [ref=f1e285]:
+              - cell [ref=f1e286]:
+                - paragraph [ref=f1e287]: ②
+              - cell [ref=f1e288]:
+                - paragraph [ref=f1e289]: VRF（Virtual Routing and Forwarding）
+              - cell [ref=f1e290]:
+                - paragraph [ref=f1e291]: "1台のルータの中に、独立した複数のルーティングテーブルを共存させる技術。テーブルはVRF識別子で区別する。同じ宛先アドレス（例: 0.0.0.0/0）でも、所属するVRFが違えば別々の経路として扱える。"
+            - row [ref=f1e292]:
+              - cell [ref=f1e293]:
+                - paragraph [ref=f1e294]: ②
+              - cell [ref=f1e295]:
+                - paragraph [ref=f1e296]: OSPFへの経路再配布（redistribute）
+              - cell [ref=f1e297]:
+                - paragraph [ref=f1e298]: OSPFの管理外で設定された経路（静的経路など）を、OSPFのLSAとして周囲のルータに広告し直す操作。
+            - row [ref=f1e299]:
+              - cell [ref=f1e300]:
+                - paragraph [ref=f1e301]: ②
+              - cell [ref=f1e302]:
+                - paragraph [ref=f1e303]: IKE（Internet Key Exchange）／IKE SA／Child SA
+              - cell [ref=f1e304]:
+                - paragraph [ref=f1e305]: IPsecの鍵交換プロトコル。まず暗号化アルゴリズムなどをネゴシエーションして制御用の安全な通信路（IKE SA）を確立し、そのIKE SA上でさらに実データ保護用の鍵（Child SA）をネゴシエーションする、という2段階構成になっている。
+            - row [ref=f1e306]:
+              - cell [ref=f1e307]:
+                - paragraph [ref=f1e308]: ②
+              - cell [ref=f1e309]:
+                - paragraph [ref=f1e310]: ESP（Encapsulating Security Payload）
+              - cell [ref=f1e311]:
+                - paragraph [ref=f1e312]: IPsecでパケットを暗号化・認証するためのプロトコル。トンネルモードでは、元のパケットにESPトレーラを付加してから暗号化し、その外側に新しいIPヘッダとESPヘッダ・認証データを付加する。
+            - row [ref=f1e313]:
+              - cell [ref=f1e314]:
+                - paragraph [ref=f1e315]: ②
+              - cell [ref=f1e316]:
+                - paragraph [ref=f1e317]: Diffie-Hellmanグループ番号
+              - cell [ref=f1e318]:
+                - paragraph [ref=f1e319]: "鍵交換に使う素数の長さ（＝鍵長）を指定する番号。番号が大きいほど鍵長が長く、より強い暗号強度になる（例: グループ1は768ビット、グループ14は2048ビット）。"
+            - row [ref=f1e320]:
+              - cell [ref=f1e321]:
+                - paragraph [ref=f1e322]: ②
+              - cell [ref=f1e323]:
+                - paragraph [ref=f1e324]: NAPT（Network Address Port Translation）
+              - cell [ref=f1e325]:
+                - paragraph [ref=f1e326]: プライベートIPアドレスとポート番号の組を、1つ以上のグローバルIPアドレスとポート番号の組に変換する技術。複数端末で1つのグローバルIPアドレスを共有できる。
+      - heading "問3（シングルサインオンの導入）で登場する用語" [level=3] [ref=f1e327]
+      - generic [ref=f1e338]:
+        - button [ref=f1e339] [cursor=pointer]
+        - button [ref=f1e344] [cursor=pointer]
+        - table [ref=f1e349]:
+          - rowgroup [ref=f1e350]:
+            - row [ref=f1e351]:
+              - columnheader [ref=f1e352]:
+                - paragraph [ref=f1e353]: 区分
+              - columnheader [ref=f1e354]:
+                - paragraph [ref=f1e355]: 用語
+              - columnheader [ref=f1e356]:
+                - paragraph [ref=f1e357]: 説明
+            - row [ref=f1e358]:
+              - cell [ref=f1e359]:
+                - paragraph [ref=f1e360]: ①
+              - cell [ref=f1e361]:
+                - paragraph [ref=f1e362]: SSO（シングルサインオン）
+              - cell [ref=f1e363]:
+                - paragraph [ref=f1e364]: 本文に定義あり。1回のログインで複数のシステムを利用できるようにする仕組み。
+            - row [ref=f1e365]:
+              - cell [ref=f1e366]:
+                - paragraph [ref=f1e367]: ①
+              - cell [ref=f1e368]:
+                - paragraph [ref=f1e369]: DS（ディレクトリサーバ）
+              - cell [ref=f1e370]:
+                - paragraph [ref=f1e371]: 図1の注記に定義あり。アカウント情報を一元管理するサーバ。
+            - row [ref=f1e372]:
+              - cell [ref=f1e373]:
+                - paragraph [ref=f1e374]: ①
+              - cell [ref=f1e375]:
+                - paragraph [ref=f1e376]: ケルベロス認証／KDC（鍵配布センタ）
+              - cell [ref=f1e377]:
+                - paragraph [ref=f1e378]: 本文に定義あり。「共通鍵暗号による認証及びデータの暗号化」を行う認証方式。KDCは「PCとサーバの鍵の管理及びチケットの発行を行う」機能で、DS上で稼働する。
+            - row [ref=f1e379]:
+              - cell [ref=f1e380]:
+                - paragraph [ref=f1e381]: ①
+              - cell [ref=f1e382]:
+                - paragraph [ref=f1e383]: TGT（Ticket Granting Ticket）／ST（Service Ticket）
+              - cell [ref=f1e384]:
+                - paragraph [ref=f1e385]: 本文に定義あり。TGT＝「PCの利用者の身分証明書に相当するチケット」、ST＝「PCの利用者がサーバでの認証を受けるためのチケット」。
+            - row [ref=f1e386]:
+              - cell [ref=f1e387]:
+                - paragraph [ref=f1e388]: ①
+              - cell [ref=f1e389]:
+                - paragraph [ref=f1e390]: SRVレコード
+              - cell [ref=f1e391]:
+                - paragraph [ref=f1e392]: 本文に定義あり。「サービス名を問い合わせることによって、当該サービスが稼働するホスト名などの情報が取得できる」DNSリソースレコード。Priority（優先度）とWeight（比率）で複数レコードの使い分けを制御する。
+            - row [ref=f1e393]:
+              - cell [ref=f1e394]:
+                - paragraph [ref=f1e395]: ②
+              - cell [ref=f1e396]:
+                - paragraph [ref=f1e397]: プロキシ例外リスト（bypass list）
+              - cell [ref=f1e398]:
+                - paragraph [ref=f1e399]: Webブラウザのプロキシ設定において、「このFQDN・アドレスへの通信はプロキシを経由せず直接行う」と指定するための除外リスト機能。一般的なブラウザ設定機能で、本文には直接の記述はない。
+            - row [ref=f1e400]:
+              - cell [ref=f1e401]:
+                - paragraph [ref=f1e402]: ②
+              - cell [ref=f1e403]:
+                - paragraph [ref=f1e404]: ステートフルパケットインスペクション（SPI）
+              - cell [ref=f1e405]:
+                - paragraph [ref=f1e406]: FWが通信のコネクション状態（TCPの往復など）を把握し、往路の通信を許可したら復路の応答パケットは自動的に許可する機能。表1の注記に「FWはステートフルパケットインスペクション機能をもつ」とあるため、表1には往路方向のルールしか載っていない。
+            - row [ref=f1e407]:
+              - cell [ref=f1e408]:
+                - paragraph [ref=f1e409]: ②
+              - cell [ref=f1e410]:
+                - paragraph [ref=f1e411]: DNSラウンドロビン
+              - cell [ref=f1e412]:
+                - paragraph [ref=f1e413]: 同じホスト名に複数のAレコードを登録しておき、問い合わせに対して順番（または多重登録した分だけ確率的）に異なるIPアドレスを返すことで負荷分散する手法。
+      - separator [ref=f1e414]
+      - 'heading "1. 問1: ネットワークの更改（IT/OT接続）" [level=2] [ref=f1e415]'
+      - heading "1-1. 現状のネットワーク構成（図1）" [level=3] [ref=f1e416]
+      - code [ref=f1e419]: "@startuml title 図1: A社ネットワークの構成(現状) cloud \"インターネット\" as INET rectangle \"事務所\" #E8F0FE { rectangle \"DMZ\" { rectangle \"外部メールサーバ\" as ExtMail rectangle \"プロキシサーバ\" as Proxy rectangle \"L2SW(DMZ)\" as L2SW_DMZ L2SW_DMZ -- ExtMail L2SW_DMZ -- Proxy } rectangle \"OAセグメント\" { rectangle \"内部メールサーバ\" as IntMail rectangle \"LDAPサーバ\" as LDAP rectangle \"PC\" as PC rectangle \"L2SW(OA)\" as L2SW_OA L2SW_OA -- IntMail L2SW_OA -- LDAP L2SW_OA -- PC } rectangle \"FW\" as FW FW -- L2SW_DMZ FW -- L2SW_OA } INET -- FW rectangle \"工場\" #FFF3E0 { rectangle \"制御セグメント\" { rectangle \"コントローラ\\n(センサ/工作機械)\" as Ctrl rectangle \"L2SW(制御)\" as L2SW_C L2SW_C -- Ctrl } rectangle \"管理セグメント\" { rectangle \"操作端末\" as OpTerm rectangle \"データヒストリアン\" as Hist rectangle \"制御サーバ\" as CtrlSrv rectangle \"L2SW(管理)\" as L2SW_M L2SW_M -- OpTerm L2SW_M -- Hist L2SW_M -- CtrlSrv } L2SW_C -- CtrlSrv : ルーティングなし\\n(制御サーバはL3中継しない) } note as N1 事務所と工場の間はネットワーク非接続。 制御セグメントと管理セグメントの間も、 制御サーバは設置されているがルーティングは行わない (両セグメントは論理的に分離されたまま)。 end note @enduml"
+      - paragraph [ref=f1e420]:
+        - strong [ref=f1e421]: ポイント
+        - text: ": DMZとOAセグメントはFWで分離され、事務所と工場はそもそもネットワークで繋がっていません。工場内でも「制御セグメント」と「管理セグメント」は制御サーバを挟んで隣接していますが、制御サーバはルーティングを行わないため、この2つも論理的に分離されたセグメントのままです。"
+      - 'heading "設問1(1): 空欄a〜c" [level=3] [ref=f1e422]'
+      - paragraph [ref=f1e423]:
+        - strong [ref=f1e424]: 答え
+      - list [ref=f1e425]:
+        - listitem [ref=f1e427]:
+          - paragraph [ref=f1e435]:
+            - text: a =
+            - strong [ref=f1e436]: Syslog
+        - listitem [ref=f1e438]:
+          - paragraph [ref=f1e446]:
+            - text: b =
+            - strong [ref=f1e447]: ダイジェスト
+        - listitem [ref=f1e449]:
+          - paragraph [ref=f1e457]:
+            - text: c =
+            - strong [ref=f1e458]: CONNECT
+      - paragraph [ref=f1e459]:
+        - strong [ref=f1e460]: 根拠
+      - list [ref=f1e461]:
+        - listitem [ref=f1e463]:
+          - paragraph [ref=f1e471]: "a: 本文「ログデータの転送は、イベント通知を転送する標準規格（RFC 5424）の[ a ]プロトコルを利用している。」→ RFC 5424は「The Syslog Protocol」という規格書そのものなので、規格番号を知っていれば a = Syslog と一意に決まります（②：RFC番号とプロトコル名の対応は前提知識）。"
+        - listitem [ref=f1e473]:
+          - paragraph [ref=f1e481]:
+            - text: "b: 本文「プロキシサーバのユーザ認証には、Base64でエンコードするBasic認証方式と、MD5やSHA-256でハッシュ化する[ b ]認証方式があるが」→ HTTP認証方式のうち、パスワードをハッシュ化して送るのは"
+            - strong [ref=f1e482]: ダイジェスト認証
+            - text: です（②：HTTP認証方式の一般知識ですが、本文の「Base64でエンコード」対「ハッシュ化」という対比が強いヒントになっています）。
+        - listitem [ref=f1e484]:
+          - paragraph [ref=f1e492]:
+            - text: "c: 本文「プロキシサーバは、HTTPの[ c ]メソッドでトンネリング通信を提供し、トンネリング通信に利用する通信ポートを443に限定する。」→ HTTPでTCPコネクションをそのまま中継させるメソッドは"
+            - strong [ref=f1e493]: CONNECT
+            - text: メソッドで、HTTPS（ポート443）通信をプロキシ経由させる際の定番の使い方と一致します（②：HTTPメソッドの前提知識）。
+      - 'heading "設問1(2): DMZに設置するとOAセグメントに設置するのに比べて軽減されるセキュリティリスクは？（40字以内）" [level=3] [ref=f1e494]'
+      - paragraph [ref=f1e495]:
+        - strong [ref=f1e496]: "答え: 社外からサーバに侵入されたときにOAセグメントの機器に侵入されるリスク（が軽減される）"
+      - paragraph [ref=f1e497]: これは本文に直接の説明がない、一般的なネットワークセキュリティ設計の知識（②）で答える設問です。外部公開サーバ（外部メールサーバ、プロキシサーバ）はインターネットから直接アクセスされる分、攻撃を受けて乗っ取られるリスクが内部サーバより高くなります。これをOAセグメントに同居させてしまうと、そのサーバを踏み台にして同一セグメント内のPCや内部メールサーバへ横方向に侵入（ラテラルムーブメント）されるおそれがあります。FWで独立したDMZに隔離しておけば、たとえDMZ内のサーバが侵入されても、DMZ→OAセグメント方向の通信はFWのルールで制限されるため、OAセグメント側への被害拡大を抑えられます。
+      - heading "1-2. 管理セグメントとOAセグメント間のファイルの受渡し（FTA）" [level=3] [ref=f1e498]
+      - code [ref=f1e501]: "@startuml title 図2: ベンダが提案したA社ネットワークの構成(更改後・抜粋) rectangle \"事務所\" #E8F0FE { rectangle \"OAセグメント\" { rectangle \"可視化サーバ\" as Vis rectangle \"キャプチャサーバ\" as Cap rectangle \"L2SW(OA)\" as L2SW_OA L2SW_OA -- Vis L2SW_OA -- Cap } } rectangle \"工場\" #FFF3E0 { rectangle \"制御セグメント\" { rectangle \"コントローラ等\" as Ctrl rectangle \"L2SW(制御)\" as L2SW_C L2SW_C -- Ctrl } rectangle \"管理セグメント\" { rectangle \"操作端末\" as OpTerm rectangle \"データヒストリアン\" as Hist rectangle \"制御サーバ\" as CtrlSrv rectangle \"L2SW(管理)\" as L2SW_M rectangle \"FTA\" as FTA L2SW_M -- OpTerm L2SW_M -- Hist L2SW_M -- CtrlSrv L2SW_M -- FTA } rectangle \"NPB\" as NPB L2SW_C -- CtrlSrv L2SW_C ..> NPB : ミラーポート\\n(制御サーバ接続ポートを複製) } FTA .[#blue].> L2SW_OA : HTTPSでファイル授受\\n(管理セグメント⇔OAセグメント\\nルーティングなしで受渡し) NPB .[#green].> Vis : ミラーパケット複製① NPB .[#green].> Cap : ミラーパケット複製② note as N2 FTAはルーティングを行わずファイルだけを橋渡しする アプライアンス(指示(c): 制御/管理セグメントとOA セグメントの間はルーティングを行わない、を満たす)。 NPBは1入力ポートに対し出力ポートを2つ設定し、 ミラーパケットを可視化サーバとキャプチャサーバの 両方に複製して送る。 end note @enduml"
+      - 'heading "設問2(1): 下線①のFTAへのログイン認証を既存のサーバで一元管理するなら、どのサーバから認証情報を取得するのが良いか？" [level=3] [ref=f1e502]'
+      - paragraph [ref=f1e503]:
+        - strong [ref=f1e504]: "答え: LDAPサーバ"
+      - paragraph [ref=f1e505]: 本文の「現状のネットワーク」の記述に、「社員のメールボックスをもつ内部メールサーバと、プロキシサーバは、ユーザ認証のためにLDAPサーバを参照する。」とあります。既にLDAPサーバがA社の認証情報を一元管理する役割を担っていることが明記されているので（①）、新たに追加するFTAもこのLDAPサーバに認証情報を問い合わせるのが自然です。
+      - 'heading "設問2(2): 下線②について、FTAにアクセスできるのはどのセグメントか？（全て答えよ）" [level=3] [ref=f1e506]'
+      - paragraph [ref=f1e507]:
+        - strong [ref=f1e508]: "答え: 管理セグメント、OAセグメント"
+      - paragraph [ref=f1e509]: 指示(a)「データヒストリアンにあるログデータをPCにファイル送信できるようにする。またPCにダウンロードしたソフトウェア更新ファイルを操作端末にファイル送信できるようにする。」から、FTAでファイルをやり取りする当事者は「データヒストリアン・操作端末（＝管理セグメントの機器）」と「PC（＝OAセグメントの機器）」であるとわかります（①）。図2でもFTAは管理セグメントに設置され、事務所側のL2SW（OAセグメント）とも接続線があります。制御セグメントの機器（コントローラ等）がFTAを使うという記述は本文になく、また指示(c)により制御セグメント自体がOAセグメントと直接やり取りすることもありません。
+      - 'heading "設問2(3): 下線③について、FTAにおいて認証と認可はそれぞれ何のために使われるか（違いが分かるようにそれぞれ25字以内）" [level=3] [ref=f1e510]'
+      - paragraph [ref=f1e511]:
+        - strong [ref=f1e512]: "答え: 認証＝FTAの利用者が本人であることを確認するため／認可＝操作ごとに実行権限を有するかを確認するため"
+      - paragraph [ref=f1e513]:
+        - text: これは「認証」と「認可」という2つのセキュリティ用語の違いを問う、前提知識（②）中心の設問です。本文には「FTAは、認証及び認可に必要な情報について、既存のサーバを参照する。」としか書かれていません。ただし表1（FTAの利用時の流れ）を見ると、①アップロード時にログイン（本人確認＝
+        - strong [ref=f1e514]: 認証
+        - text: ）が行われ、③承認時には「上長だけが行うことができる」という
+        - strong [ref=f1e515]: 操作ごとの権限チェック
+        - text: （＝
+        - strong [ref=f1e516]: 認可
+        - text: ）が行われていることが読み取れ、認証と認可が別々の場面で使われていることのヒントになっています。
+      - heading "1-3. 測定データの可視化（NPB・ミラーポート）" [level=3] [ref=f1e517]
+      - 'heading "設問3(1): 空欄d" [level=3] [ref=f1e518]'
+      - paragraph [ref=f1e519]:
+        - strong [ref=f1e520]: "答え: d = フラッディング"
+      - paragraph [ref=f1e521]:
+        - text: "本文（ベンダとの会話）: 「宛先MACアドレスがMACアドレステーブルに学習済みかどうかを確認した上で、学習済みの場合には学習されているポートに転送します。宛先MACアドレスが学習されていない場合は[ d ]します。」→ これはL2SWの標準的な転送動作の知識（②）で、学習していない宛先へは受信ポート以外の全ポートへ"
+        - strong [ref=f1e522]: フラッディング
+        - text: します。
+      - 'heading "設問3(2): 下線④について、ミラーポート方式はネットワークタップ方式と比べて性能面でどのような制約が生じるか？（40字以内）" [level=3] [ref=f1e523]'
+      - paragraph [ref=f1e524]:
+        - strong [ref=f1e525]: "答え: 送信側と受信側のトラフィックを合計1Gビット/秒までしか取り込めない。"
+      - code [ref=f1e528]: "@startuml title ミラーポート方式とネットワークタップ方式のポート数比較 rectangle \"制御セグメントのL2SW\" as L2SW rectangle \"【ミラーポート方式(今回採用)】\" as Box1 { rectangle \"NPB\\n入力ポート×1\" as NPB1 } L2SW -[#blue]-> NPB1 : ミラーポート1本に\\n送信側・受信側\\n両方のトラフィックを集約\\n(ケーブルは1000BASE-SX=1Gbps) rectangle \"【ネットワークタップ方式(不採用)】\" as Box2 { rectangle \"NPB\\n入力ポート×2\" as NPB2 } L2SW -[#red]-> NPB2 : 送信側の配線から複製 L2SW -[#red]-> NPB2 : 受信側の配線から複製\\n(2本の物理ポートで受信) note as N3 ミラーポート方式は1ポート(1Gbps)に 送信+受信の両トラフィックを集約するため、 合計で最大1Gビット/秒までしか取り込めない。 タップ方式は送信用・受信用を別ポート(計2ポート) で受けるため、この制約を受けない。 end note @enduml"
+      - paragraph [ref=f1e529]: 根拠は2つの本文情報の組み合わせです（①）。
+      - list [ref=f1e530]:
+        - listitem [ref=f1e532]:
+          - generic [ref=f1e533]: "1."
+          - paragraph [ref=f1e537]: 「NPBにつながるケーブルは全て1000BASE-SXです。」→ 1本のケーブル（＝1ポート）の上限は1Gビット/秒。
+        - listitem [ref=f1e539]:
+          - generic [ref=f1e540]: "2."
+          - paragraph [ref=f1e544]: ネットワークタップ方式の説明「送信側、受信側、それぞれの配線でパケットを複製するので、NPBの入力ポートは2ポート必要です。」→ タップ方式は送信用と受信用で別ポート（合計2Gbps分の余地）を使えるのに対し、ミラーポート方式は1つのポートに送信側・受信側のトラフィックの両方を集約して出力するため、そのポート1本（1Gbps）が上限になってしまいます。
+      - 'heading "設問3(3): 下線⑤について、1ポートだけからミラーパケットを取得する場合、どの装置が接続されているポートを設定すべきか？" [level=3] [ref=f1e545]'
+      - paragraph [ref=f1e546]:
+        - strong [ref=f1e547]: "答え: 制御サーバ"
+      - paragraph [ref=f1e548]: 本文のデータフローの記述を辿ります（①）。「コントローラは、更改前と同様に測定データを制御サーバに常時送信する。」→ 制御セグメント内の全コントローラの測定データは、最終的に必ず制御サーバへ向けて送信されます。つまり制御セグメントのL2SWの中で、「全てのトラフィックが集約して通過する1点」は制御サーバが接続されたポートです。1ポートしかミラーリングできないという制約下では、ここを選ぶのが最も合理的です。
+      - paragraph [ref=f1e549]:
+        - strong [ref=f1e550]: 下線⑤の文自体の意味を分解する
+      - paragraph [ref=f1e551]: まず下線⑤「制御セグメントに設置されているL2SWの特定ポートにミラー設定を行い、L2SWの該当ポートの送信側、受信側、双方のパケットを複製してNPBに送信させる。」という一文自体を、要素ごとに分解して読み解きます（②：L2SWのポートとパケットの向きに関する前提知識）。
+      - list [ref=f1e552]:
+        - listitem [ref=f1e554]:
+          - paragraph [ref=f1e562]:
+            - strong [ref=f1e563]: 「特定ポート」とは
+            - text: ": L2SWには機器を接続するための物理ポートが複数あります（例: ポート1にコントローラA、ポート2にコントローラB、ポート8に制御サーバ、というように、1つの物理ポートに1台の機器がケーブルで接続されるイメージです）。「特定ポートにミラー設定を行う」とは、この複数あるポートの中から"
+            - strong [ref=f1e564]: 1つだけを選んで
+            - text: 、「このポートを流れるパケットは複製してNPBにも送る」という設定をL2SWに対して行う、という意味です。裏を返せば、選ばれなかった他のポートを流れるパケットは複製されません。
+        - listitem [ref=f1e566]:
+          - generic [ref=f1e573]:
+            - paragraph [ref=f1e574]:
+              - strong [ref=f1e575]: 「送信側、受信側」とは
+              - text: ": 1本のポート（1本のケーブル）には、データが2つの向きに流れます。"
+            - list [ref=f1e576]:
+              - listitem [ref=f1e578]:
+                - paragraph [ref=f1e586]:
+                  - strong [ref=f1e587]: 受信側（Rx）
+                  - text: ": 接続されている機器（例: 制御サーバ）からL2SWに向かって流れてくるパケット。"
+              - listitem [ref=f1e589]:
+                - paragraph [ref=f1e597]:
+                  - strong [ref=f1e598]: 送信側（Tx）
+                  - text: ": L2SWから接続されている機器（例: 制御サーバ）に向かって流れていくパケット。 「双方のパケットを複製する」というのは、このRx・Tx両方向のパケットをまとめてコピーする、という意味です。つまり制御サーバ接続ポートを選んだ場合、「制御サーバが送ってきたパケット」も「制御サーバへ向けて送られるパケット」も両方ともNPBに複製されます。"
+        - listitem [ref=f1e600]:
+          - paragraph [ref=f1e608]:
+            - strong [ref=f1e609]: 「複製してNPBに送信させる」とは
+            - text: ": 元のパケットは通常どおり本来の宛先（制御サーバなど）にもそのまま届きます。それとは別にコピーだけがNPBという追加の出力ポートにも送られる、という点が重要です。つまりミラーリングは既存の通信を妨げず、盗み見用の複製だけを横から取り出す仕組みです。"
+      - paragraph [ref=f1e610]:
+        - strong [ref=f1e611]: なぜ「全トラフィックが集約する1点」を探す必要があるのか
+      - paragraph [ref=f1e612]:
+        - text: 以上を踏まえると、ミラー機能は、L2SW全体を流れる全パケットを複製してくれるわけではなく、
+        - strong [ref=f1e613]: 指定した1つの物理ポートを出入りするパケットだけ
+        - text: を複製する仕組みだということが分かります（①：本文の下線⑤より）。
+      - paragraph [ref=f1e614]: したがって、もし例えばコントローラ1台だけが接続されたポートをミラー対象に選んでしまうと、複製されるのはそのコントローラ1台分のデータだけになり、他のコントローラの測定データはNPB（延いては可視化サーバ・キャプチャサーバ）に一切届きません。今回の目的は「測定データの可視化」、つまり全コントローラ分のデータを漏れなく取得することなので、これでは目的を達成できません。
+      - paragraph [ref=f1e615]: 一方、コントローラは全て「制御サーバへ測定データを送信する」という共通の宛先を持っています。L2SWの中でどのコントローラのポートから入ってきたフレームであっても、最終的には制御サーバ行きとして必ず制御サーバ接続ポートを経由して出ていきます（②：L2SWは宛先MACアドレスに基づき該当ポートへのみ転送するため、複数の送信元からの通信でも宛先が同じなら同じ出力ポートに集まる）。つまり制御サーバ接続ポートは、いわば全コントローラのデータが合流する"川下"にあたる場所であり、ここを1ポートだけミラーすれば、コントローラの台数に関係なく全員分のデータを一度に取得できます。これが「1ポートしか使えない」という制約の下で「全トラフィックが集約して通過する1点」を探さなければならない理由です。
+      - code [ref=f1e618]: "@startuml title なぜ「制御サーバ接続ポート」を選ぶ必要があるのか rectangle \"制御セグメントのL2SW\" { rectangle \"コントローラA\" as CA rectangle \"コントローラB\" as CB rectangle \"コントローラC\" as CC rectangle \"制御サーバ接続ポート\" as PortSrv } rectangle \"制御サーバ\" as Srv CA -[#blue]-> PortSrv : 測定データ CB -[#blue]-> PortSrv : 測定データ CC -[#blue]-> PortSrv : 測定データ PortSrv -[#blue]-> Srv note as N1 ミラー設定できるのは特定の1ポートだけ。 コントローラAのポートをミラーすると Aのデータしか取れずB・Cは欠落する。 制御サーバ接続ポートなら全コントローラの データが必ずここを通過するので、 1ポートのミラーだけで全データを取得できる。 end note @enduml"
+      - 'heading "設問3(4): サーバでミラーパケットを受信するためのインタフェースのモードと、それによって受信できるようになるフレームは？（30字以内）" [level=3] [ref=f1e619]'
+      - paragraph [ref=f1e620]:
+        - strong [ref=f1e621]: "答え: モード＝プロミスキャス／フレーム＝宛先MACアドレスが自分のMACアドレス以外のフレーム"
+      - paragraph [ref=f1e622]: 前提知識（②）です。少し丁寧に、NICの動作原理から説明します。
+      - paragraph [ref=f1e623]:
+        - strong [ref=f1e624]: 通常のNICがしていること（フィルタリング）
+      - paragraph [ref=f1e625]: ケーブル（イーサネット）には本来、そのセグメントに流れる全てのフレームが物理的に届いています。しかし、通常のNIC（普段パソコンやサーバに挿さっているネットワークカード）は、届いたフレームを全部OSに渡すわけではありません。NIC自身がハードウェアレベルでフレームの「宛先MACアドレス」をチェックし、次の3種類だけを上位層（OS・アプリケーション）に渡し、それ以外は自分宛てでないと判断してその場で捨てています。
+      - list [ref=f1e626]:
+        - listitem [ref=f1e628]:
+          - generic [ref=f1e629]: "1."
+          - paragraph [ref=f1e633]: 宛先MACアドレスが自分自身のMACアドレスと一致するフレーム（＝自分宛てのユニキャスト）
+        - listitem [ref=f1e635]:
+          - generic [ref=f1e636]: "2."
+          - paragraph [ref=f1e640]: 宛先MACアドレスがブロードキャストアドレス（FF-FF-FF-FF-FF-FF）のフレーム
+        - listitem [ref=f1e642]:
+          - generic [ref=f1e643]: "3."
+          - paragraph [ref=f1e647]: 宛先MACアドレスが、自分が参加しているマルチキャストグループのフレーム
+      - paragraph [ref=f1e648]: つまり普段は「自分に関係ないフレームはハードウェアの時点で捨てる」のがNICのデフォルト動作です。これは、無関係な通信をいちいちOSに渡してCPUの処理負荷を上げないための、正しく効率的な仕組みです。
+      - paragraph [ref=f1e649]:
+        - strong [ref=f1e650]: なぜキャプチャサーバではこれが困る（前提知識②）
+      - paragraph [ref=f1e651]:
+        - text: ところが今回、可視化サーバやキャプチャサーバがNPBから受け取る「ミラーパケット」は、そもそも
+        - strong [ref=f1e652]: 可視化サーバ・キャプチャサーバ宛てのフレームではありません
+        - text: 。
+      - paragraph [ref=f1e653]: まず「NPBがミラーパケットをこれらのサーバに送信している」こと自体は、本文に明記されています（①）。「可視化サーバは複製されたパケット（以下、ミラーパケットという）を受信して統計処理を行い、時系列グラフによって可視化をすることができる。キャプチャサーバは大容量のストレージをもち、ミラーパケットをそのまま長期間保存することができ」、さらに「NPBは受信したミラーパケットを必要なパケットだけにフィルタリングした後に再度複製し、⑥可視化サーバとキャプチャサーバに送信する。」とあります。つまりNPBは、L2SWのミラーポートから受け取ったミラーパケットをフィルタリングした上でもう一度複製し、可視化サーバとキャプチャサーバの両方に送りつける、という動作が本文に書かれています。ミラーパケットの中身は、コントローラが制御サーバへ送った測定データのフレームをそのまま複製したものなので、宛先MACアドレスは「制御サーバのMACアドレス」であり、可視化サーバ・キャプチャサーバ自身のMACアドレスとは一致しません。
+      - paragraph [ref=f1e654]: そのため、可視化サーバ・キャプチャサーバのNICが通常モードのままだと、上記1〜3のどれにも該当しない「他人（制御サーバ）宛てのフレーム」として、届いたミラーパケットをNIC側でことごとく捨ててしまいます。これではせっかくNPBが複製して送ってきても、サーバのアプリケーションには何も届かず、可視化やキャプチャができません。
+      - paragraph [ref=f1e655]:
+        - strong [ref=f1e656]: プロミスキャスモードで解決する
+      - paragraph [ref=f1e657]: そこでNICを**プロミスキャスモード（無差別モード）**に設定します。このモードでは、NICは宛先MACアドレスによる選別を行わず、届いたフレームを宛先に関係なく全て上位層に渡すようになります。これにより、宛先が制御サーバになっているミラーパケットも捨てられずにOS・キャプチャアプリケーションまで届くようになり、統計処理や長期保存が可能になります。
+      - paragraph [ref=f1e658]: 以上をまとめると、答えの「宛先MACアドレスが自分のMACアドレス以外のフレーム」というのは、通常モードなら3.のマルチキャストや2.のブロードキャストを除き基本的に捨てられていたフレーム全般を指しており、プロミスキャスモードにすることで初めてそれらを受信できるようになる、という意味です。
+      - 'heading "設問3(5): キャプチャサーバに1,000日間のミラーパケットを保存するのに必要なディスク容量は？" [level=3] [ref=f1e659]'
+      - paragraph [ref=f1e660]:
+        - strong [ref=f1e661]: "答え: 1,080（Gバイト）"
+      - paragraph [ref=f1e662]: "計算過程:"
+      - code [ref=f1e665]: 平均トラフィック = 100 kビット/秒 = 100 × 10^3 ビット/秒 1日の総量 = 100×10^3 × 86,400秒 = 8,640,000,000 ビット/日 = 8.64 × 10^9 ビット/日 1,000日分 = 8.64 × 10^9 × 1,000 = 8.64 × 10^12 ビット バイトに変換（÷8） = 1.08 × 10^12 バイト Gバイトに変換（÷10^9） = 1,080 Gバイト
+      - separator [ref=f1e666]
+      - 'heading "2. 問2: セキュアゲートウェイサービスの導入" [level=2] [ref=f1e667]'
+      - heading "2-1. 現行のネットワーク構成とVRF" [level=3] [ref=f1e668]
+      - 'heading "設問1(1): 下線①のIPアドレスを、表1中のIPアドレスで答えよ" [level=3] [ref=f1e669]'
+      - paragraph [ref=f1e670]:
+        - strong [ref=f1e671]: "答え: a.b.c.d"
+      - paragraph [ref=f1e672]:
+        - text: 下線①「P社営業支援サービスでは、特定のIPアドレスから送信されたパケットだけを許可するアクセス制御を設定して、本社のFWを経由しない経路からの接続を制限している。」→ 本社FWはNAPTを行うため、インターネットに出ていくパケットの送信元IPアドレスは、本社FWのグローバルIPアドレスに変換されます。表1でFWのINT-IF（インターネットに接続するIF）のIPアドレスは
+        - strong [ref=f1e673]: a.b.c.d
+        - text: "（注3: 固定のグローバルIPアドレス）と記載されており（①）、これがP社営業支援サービス側で許可される「特定のIPアドレス」です。"
+      - 'heading "設問1(2): 空欄a（VRFの説明部分）" [level=3] [ref=f1e674]'
+      - paragraph [ref=f1e675]:
+        - strong [ref=f1e676]: "答え: a = ルーティング"
+      - paragraph [ref=f1e677]:
+        - text: 本文「VRF（Virtual Routing and Forwarding）を利用して二つの[ a ]テーブルを保持し、経路情報をVRFの識別子（以下、VRF識別子という）によって識別する。」→ VRFは1台の機器に複数の独立した
+        - strong [ref=f1e678]: ルーティング
+        - text: テーブルを持たせる技術であることは前提知識（②）です。
+      - code [ref=f1e681]: "@startuml title VRFによる二つのルーティングテーブルのイメージ(本社IPsecルータ) rectangle \"本社IPsecルータ\" { rectangle \"VRF 65000:1\\n(インターネット行き用)\" as VRF1 { rectangle \"INT-IF\\n(s.t.u.v)\" as INT1 } rectangle \"VRF 65000:2\\n(LAN/トンネル行き用)\" as VRF2 { rectangle \"LAN-IF\\n(172.17.0.1)\" as LAN1 rectangle \"トンネルIF\" as TUN1 } } cloud \"インターネット\\n(ISPのルータ)\" as INET rectangle \"L3SW(本社)\" as L3SW rectangle \"営業所のIPsecルータ\" as OfficeRT VRF1 --> INET : 宛先0.0.0.0/0\\n静的経路制御\\n(ISPのルータへ) VRF2 --> L3SW : 宛先0.0.0.0/0\\nネクストホップ=本社のL3SW\\n動的経路制御(OSPF) VRF2 --> OfficeRT : 宛先172.17.1.0/24(営業所のLAN)\\nネクストホップ=トンネルIF\\n静的経路制御 note as N4 同じ「0.0.0.0/0」という宛先でも、 VRF 65000:1(インターネット側)と VRF 65000:2(LAN側)とで別々の ルーティングテーブルに載っており、 ネクストホップも別々になる。 これがVRFで二つのテーブルを 持たせる理由。 end note @enduml"
+      - 'heading "設問1(3): 表2の空欄b〜d" [level=3] [ref=f1e682]'
+      - paragraph [ref=f1e683]:
+        - strong [ref=f1e684]: "答え: b = 本社のL3SW／c = 静的経路制御／d = 静的経路制御"
+      - list [ref=f1e685]:
+        - listitem [ref=f1e687]:
+          - paragraph [ref=f1e695]: "b: 本文「本社のFWには、OSPFにデフォルトルートを配布する設定を行っている。」＋「本社のFW、L3SW及びIPsecルータには、OSPFによる経路制御を稼働させるための設定を行っている。」→ FWが配布したデフォルトルート情報は、OSPFで繋がっている本社のL3SWを経由して本社IPsecルータ（VRF 65000:2側）に伝わります。図1の物理接続順（FW－L3SW－IPsecルータ）から、本社IPsecルータから見た次のホップは本社のL3SWです（①＋論理）。"
+        - listitem [ref=f1e697]:
+          - paragraph [ref=f1e705]: "c・d: 本文「本社及び営業所のIPsecルータには、営業所のPCが通信するパケットをIPsec VPNを介して転送するために、トンネルIFをネクストホップとした静的経路を設定している。」と直接明記されています（①）。"
+      - 'heading "設問1(4): \"本社のIPsecルータ\"が、営業所のPCからP社営業支援サービス宛てのパケットを転送するときに選択する経路は？" [level=3] [ref=f1e706]'
+      - paragraph [ref=f1e707]:
+        - strong [ref=f1e708]: "答え: VRF識別子＝65000:2／宛先ネットワーク＝0.0.0.0/0"
+      - paragraph [ref=f1e709]: 本文「営業所のPCからP社営業支援サービス宛てのパケットは、営業所のIPsecルータ、本社のIPsecルータ、L3SW、FW及びインターネットを経由してP社営業支援サービスに送信される。」（①）という経路の流れが直接示されています。本社IPsecルータの視点では、このパケットは（a）営業所のPCが送信した、営業所LAN（172.17.1.0/24）からのトラフィックであり、（b）宛先はインターネット上のP社営業支援サービスです。営業所LAN宛の経路ではなく、あくまで「LAN側から来て、外へ出ていく」トラフィックなので、LAN側のVRF（65000:2）にあるデフォルトルート（0.0.0.0/0、ネクストホップ＝本社のL3SW）を選択します。
+      - 'heading "設問1(5): 下線②について、静的なデフォルトルートが必要な理由は？（40字以内）" [level=3] [ref=f1e710]'
+      - paragraph [ref=f1e711]:
+        - strong [ref=f1e712]: "答え: ISPが割り当てる営業所のIPsecルータのIPアドレスが動的だから"
+      - paragraph [ref=f1e713]: 表1の注4「w.x.y.zは、ISPから割り当てられた動的なグローバルIPアドレスである。」（①、営業所IPsecルータのINT-IF）が根拠です。IPsec VPNの接続先（営業所IPsecルータ）のグローバルIPアドレスが動的に変化しうるため、特定のIPアドレス宛の静的経路を書くことができません。そこで「宛先を特定しない」デフォルトルート（0.0.0.0/0、VRF 65000:1側でISPのルータへ）を使うことで、相手のアドレスが変わってもインターネットへ出られるようにしています。
+      - paragraph [ref=f1e714]:
+        - strong [ref=f1e715]: 補足（なぜ「デフォルトルート」だと相手のIPアドレスが変わっても大丈夫なのか）
+      - list [ref=f1e716]:
+        - listitem [ref=f1e718]:
+          - paragraph [ref=f1e726]: 通常の静的経路は「宛先ネットワーク（例：w.x.y.z/32）→ネクストホップ」という1対1の対応をルータに設定します。もしこの方式で本社IPsecルータからISPへの経路を書くなら、宛先は「営業所IPsecルータの現在のグローバルIPアドレス w.x.y.z」そのものになります。しかしw.x.y.zはISPが動的に割り当てるアドレスなので、いつ変わるか分かりません。変わるたびに本社側の経路設定を書き換えるのは非現実的です。
+        - listitem [ref=f1e728]:
+          - paragraph [ref=f1e736]: 一方、0.0.0.0/0という宛先は「他のどの経路にも一致しない、すべてのパケット」を表す特別な書き方です（家庭用ルータの「デフォルトゲートウェイ」と同じ考え方）。つまり「宛先が誰であっても、とりあえずISPのルータへ送る」という経路であり、宛先アドレスの中身を一切見ずにマッチします。
+        - listitem [ref=f1e738]:
+          - paragraph [ref=f1e746]: 実際にVPN用のIPsecトンネルを確立する際は、営業所IPsecルータ側からVPN接続を開始（あるいは本社側がその時点のw.x.y.z宛てにパケットを送る）することで、通信の中でその時点の実アドレスが使われます。本社IPsecルータの経路表に「w.x.y.z宛」という個別のエントリを持たせておく必要はなく、「インターネット方向は全部ISPのルータへ投げる」という1本の経路（デフォルトルート）だけ用意しておけば、w.x.y.zがどんな値に変わってもその経路に乗って届く、という仕組みです。
+      - 'heading "設問1(6): 下線③（OSPFに静的経路を再配布）の宛先ネットワークは？" [level=3] [ref=f1e747]'
+      - paragraph [ref=f1e748]:
+        - strong [ref=f1e749]: "答え: 172.17.1.0/24（営業所のLAN）"
+      - paragraph [ref=f1e750]: 表2の本社IPsecルータ・VRF 65000:2の行に「172.17.1.0/24（営業所のLAN）、ネクストホップ＝トンネルIF、経路制御方式＝静的経路制御」という行があります（①）。これがまさに「静的経路」であり、これをOSPFに再配布することで、OSPFで動いている本社のFWやL3SWも営業所LAN宛の経路を学習できるようになります。
+      - heading "2-2. 新規ネットワークの検討（SGWサービス・IPsec VPN）" [level=3] [ref=f1e751]
+      - code [ref=f1e754]: "@startuml title 図2: R主任が考えた新規ネットワーク構成と通信の流れ rectangle \"Q社SGWサービス\" { rectangle \"POP\" as POP rectangle \"FW機能\" as SGWFW POP -- SGWFW } cloud \"Q社PaaS\" as PaaS cloud \"P社営業支援サービス\" as Pservice cloud \"インターネット\" as INET SGWFW --> PaaS rectangle \"本社\" as HQ { rectangle \"新IPsecルータ\" as HQRT rectangle \"PC\" as HQPC HQRT -- HQPC } rectangle \"営業所\" as Branch { rectangle \"新IPsecルータ\" as BrRT rectangle \"PC\" as BrPC BrRT -- BrPC } rectangle \"テレワーク拠点\" as Tele { rectangle \"TPC\" as TPC } HQRT ..> POP : IPsec VPN(トンネルモード) BrRT ..> POP : IPsec VPN(トンネルモード) TPC ..> POP : IPsec VPN(トンネルモード) POP -[#blue,bold]-> SGWFW SGWFW -[#blue,bold]-> INET INET -[#blue,bold]-> Pservice note as N5 PC/TPCからQ社PaaS及びP社営業支援サービスへの通信は、 必ずPOP→FW機能→インターネットを経由する (FW機能でパケットフィルタリングとNAPTを実施)。 end note @enduml"
+      - 'heading "設問2(1): 空欄e〜h" [level=3] [ref=f1e755]'
+      - paragraph [ref=f1e756]:
+        - strong [ref=f1e757]: "答え: e = 暗号／f = IP／g = Child／h = 鍵長"
+      - code [ref=f1e760]: "@startuml title ESPトンネルモードのカプセル化の流れ rectangle \"①元のIPパケット\" as P1 rectangle \"②ESPトレーラを付加\\n(長さ調整用)\" as P2 rectangle \"③暗号化\\n(①+②をまとめて暗号化)\" as P3 rectangle \"④新しいIPヘッダを付加\\n(POP宛て等の外側ヘッダ)\" as P4 rectangle \"⑤ESPヘッダ+ESP認証データを付加\\n(ESPヘッダはChild SAを識別するSPIを含む)\" as P5 P1 --> P2 P2 --> P3 P3 --> P4 P4 --> P5 note bottom 空欄 e=暗号(化)、f=IP(ヘッダ)、g=Child(SA) ESPヘッダ内のSPI(Security Parameter Index)が どのChild SAの通信かを相手に識別させる。 end note @enduml"
+      - list [ref=f1e761]:
+        - listitem [ref=f1e763]:
+          - paragraph [ref=f1e771]:
+            - text: "e・f・g: 本文「新IPsecルータ及びTPCは、IPsec VPNを介して転送する必要があるパケットを、長さを調整するESPトレーラを付加して[ e ]化する。次に、新しい[ f ]ヘッダと、[ g ]SAを識別するためのESPヘッダ及びESP認証データを付加して、POP宛てに送信する。」→ ESPのトンネルモード処理手順そのもの（②：IPsecの一般知識）。ESPトレーラを付けたあとに行うのは"
+            - strong [ref=f1e772]: 暗号
+            - text: 化、外側に付加する新しいヘッダは
+            - strong [ref=f1e773]: IP
+            - text: ヘッダ、ESPヘッダが識別する対象は先の文脈から
+            - strong [ref=f1e774]: Child
+            - text: SA（実データ通信用のSA）です。
+        - listitem [ref=f1e776]:
+          - paragraph [ref=f1e784]:
+            - text: "h: 本文「鍵の生成に用いるアルゴリズムと[ h ]を定めているDiffie-Hellmanグループ番号には、現行では1を用いているが、POPとの接続では1よりも[ h ]の長い14を用いた方が良いと考えた。」→ Diffie-Hellmanグループ番号は暗号強度に関わる"
+            - strong [ref=f1e785]: 鍵長
+            - text: を表す番号であることは前提知識（②）で、番号が大きいほど鍵長が長くなります（グループ1＝768ビット、グループ14＝2048ビット）。
+      - code [ref=f1e788]: "@startuml title IPsec VPNのネゴシエーション(IKE SA → Child SA) participant \"新IPsecルータ\\n(またはTPC)\" as RT participant \"POP\" as POP RT -> POP : IKE SAネゴシエーション要求\\n(暗号化アルゴリズム/疑似ランダム関数/\\n完全性アルゴリズム/DHグループ番号) POP -> RT : パラメータ決定 note over RT, POP IKE SA確立 (ここまでの通信を保護する制御チャネルができる) end note RT -> POP : Child SAネゴシエーション\\n(IKE SAを介して、認証及びChild SA\\n確立に必要な情報を交換) POP -> RT : パラメータ決定 note over RT, POP Child SA確立 (実データを暗号化して送るためのSAができる) end note RT -> POP : ESPで暗号化したデータ通信 @enduml"
+      - 'heading "設問2(2): POPとのIPsec VPNを確立できない場合、失敗しているネゴシエーションを特定するために確認すべき状態は？（本文の字句で二つ）" [level=3] [ref=f1e789]'
+      - paragraph [ref=f1e790]:
+        - strong [ref=f1e791]: "答え: IKE SA、Child SA"
+      - paragraph [ref=f1e792]: 本文「新IPsecルータ及びTPCとPOPは、IKE SAを確立するために必要な、暗号化アルゴリズム…をネゴシエーションして決定し、IKE SAを確立する。次に、新IPsecルータ及びTPCとPOPは、認証及びChild SAを確立するために必要な情報を、IKE SAを介してネゴシエーションして決定し、Child SAを確立する。」（①）とあり、確立作業が「IKE SA→Child SA」の2段階になっていると明記されています。IPsec VPNの確立に失敗したときは、まずどちらの段階まで進んでいるか（IKE SAが確立できているか、その先のChild SAが確立できているか）を切り分けて確認するのがトラブルシューティングの定石です（②）。
+      - heading "2-3. 接続テスト" [level=3] [ref=f1e793]
+      - 'heading "設問3(1): 下線④について、情報セキュリティの観点でR主任が確認した内容は？（20字以内）" [level=3] [ref=f1e794]'
+      - paragraph [ref=f1e795]:
+        - strong [ref=f1e796]: "答え: N社専用のIPアドレスであること"
+      - paragraph [ref=f1e797]:
+        - text: 直前の文脈「R主任は、Q社SGWサービスがN社以外にも提供されていると考えて、④NAPTのためにQ社SGWサービスから割当てを受けたグローバルIPアドレスのサービス仕様を、Q社に確認した。」（①）から読み取ります。P社営業支援サービス側は「特定のIPアドレスから送信されたパケットだけを許可する」というアクセス制御をしているので、もしそのグローバルIPアドレスが
+        - strong [ref=f1e798]: 他のQ社SGWサービス利用企業と共用
+        - text: されていたら、そのアドレス経由で他社の通信までP社営業支援サービスへのアクセスが許可されてしまうリスクがあります。だからR主任は「N社専用のIPアドレスかどうか」を確認したと考えられます。
+      - 'heading "設問3(2): 下線⑤について、P社営業支援サービスの応答時間が現行より長くなると考えられる要因は？（30字以内）" [level=3] [ref=f1e799]'
+      - paragraph [ref=f1e800]:
+        - strong [ref=f1e801]: "答え: Q社SGWサービスの経由によって発生する遅延"
+      - paragraph [ref=f1e802]: 図2（①）の経路と現行構成（図1）を比べると、新構成ではPCからの通信が必ずQ社SGWサービスのPOPとFW機能を経由するようになります。中継する機器・処理段数が増える分、単純に伝送・処理にかかる時間が上乗せされるため、応答時間が伸びると考えられます（①の経路変化＋②のネットワーク遅延に関する一般知識）。
+      - separator [ref=f1e803]
+      - 'heading "3. 問3: シングルサインオンの導入（ケルベロス認証）" [level=2] [ref=f1e804]'
+      - heading "3-1. ネットワーク構成及び機器の設定と利用形態" [level=3] [ref=f1e805]
+      - code [ref=f1e808]: "@startuml title 図1: 本社のネットワーク構成とFWルール(表1)の対応 cloud \"インターネット\" as INET rectangle \"ルータ\" as Router rectangle \"FW\" as FW rectangle \"DMZ\" #FFF3E0 { rectangle \"公開Webサーバ\" as WebSrv rectangle \"プロキシサーバ\" as Proxy rectangle \"外部DNSサーバ\" as ExtDNS } rectangle \"内部LAN\" #E8F0FE { rectangle \"PCセグメント\" as PCSeg rectangle \"サーバセグメント\" { rectangle \"社内DNSサーバ\" as IntDNS rectangle \"業務サーバ/営業支援サーバ\" as BizSrv rectangle \"DS1/DS2\" as DS } } INET --> Router Router --> FW FW .[#red].> ExtDNS : 行1: any→外部DNSサーバ\\nTCP/53,UDP/53 ExtDNS .[#red].> FW : 行3: 外部DNSサーバ→any\\nTCP/53,UDP/53 FW .[#blue].> WebSrv : 行2: any→公開Webサーバ\\nTCP/443 Proxy .[#green].> FW : 行4: プロキシサーバ→any\\nTCP/80,TCP/443 IntDNS .[#orange].> ExtDNS : 行5: 社内DNSサーバ→外部DNSサーバ\\nTCP/53,UDP/53 rectangle \"サーバセグメント\" as SS2 SS2 .[#purple].> Proxy : 行6: サーバセグメント→プロキシサーバ\\nTCP/8080 PCSeg .[#purple].> Proxy : 行7: PCセグメント→プロキシサーバ\\nTCP/8080 FW -- Router FW -- PCSeg FW -- IntDNS note as N6 ア=外部DNSサーバ, ウ=公開Webサーバ, エ=プロキシサーバ, オ=any, カ=社内DNSサーバ, イ=UDP/53 end note @enduml"
+      - 'heading "設問1(1): 下線(a)の動作のために、PCのプロキシ設定で登録すべき内容は？（40字以内）" [level=3] [ref=f1e809]'
+      - paragraph [ref=f1e810]:
+        - strong [ref=f1e811]: "答え: 業務サーバと営業支援サーバのFQDNを、プロキシ例外リストに登録する。"
+      - paragraph [ref=f1e812]: これは一般的なWebブラウザのプロキシ設定機能の知識（②）です。多くのブラウザ・OSのプロキシ設定には「この宛先だけはプロキシを経由せず直接接続する」という**例外リスト（bypass list）**機能があります。下線(a)「業務サーバ及び営業支援サーバへのアクセスは、プロキシサーバを経由せずWebブラウザから直接行う」を実現するには、この例外リストに両サーバのFQDNを登録します。
+      - 'heading "設問1(2): 下線(b)について、(iii)〜(v)の実行のために必要な「その他のネットワーク情報」を二つ答えよ" [level=3] [ref=f1e813]'
+      - paragraph [ref=f1e814]:
+        - strong [ref=f1e815]: "答え: 社内DNSサーバのIPアドレス、デフォルトゲートウェイのIPアドレス"
+      - list [ref=f1e816]:
+        - listitem [ref=f1e818]:
+          - paragraph [ref=f1e826]: "社内DNSサーバのIPアドレス: 本文(iv)「PCのスタブリゾルバは、社内DNSサーバで名前解決を行う。」と直接明記されており（①）、PCが名前解決を行うには社内DNSサーバのIPアドレスをあらかじめ知っている必要があります。"
+        - listitem [ref=f1e828]:
+          - paragraph [ref=f1e836]: "デフォルトゲートウェイのIPアドレス: 図1の構成では、PCセグメントとサーバセグメント・DMZは別サブネットに分かれており、それらへの通信にはL3SWでのルーティングが必要です（①：図1の構成）。(iii)の業務サーバ・営業支援サーバへのアクセスや(v)のマルウェア定義ファイル更新（プロキシサーバ経由、DMZ宛）はいずれもセグメントをまたぐ通信なので、PCはデフォルトゲートウェイのIPアドレスを知っている必要があります（②：IP通信の基本知識）。"
+      - 'heading "設問1(3)・(4): 表1の空欄ア〜カ" [level=3] [ref=f1e837]'
+      - paragraph [ref=f1e838]:
+        - strong [ref=f1e839]: "答え: ア＝外部DNSサーバ／ウ＝公開Webサーバ／エ＝プロキシサーバ／オ＝any／カ＝社内DNSサーバ／イ＝UDP/53"
+      - list [ref=f1e840]:
+        - listitem [ref=f1e842]:
+          - paragraph [ref=f1e850]:
+            - strong [ref=f1e851]: ア・イ（行1・3）
+            - text: ": 本文(ii)「外部DNSサーバは、DMZのゾーン情報の管理及びフルサービスリゾルバの機能をもっている。外部DNSサーバは、社外からの再帰問合せ要求は受け付けない。」（①）。行1（インターネット→DMZ、宛先ア、TCP/53,イ）は外部からDMZ内DNSサーバへの限定的な問合せ（再帰なし、権威応答のみ）を許可するルールで、宛先は"
+            - strong [ref=f1e852]: 外部DNSサーバ
+            - text: です。DNSはTCP/53（大きな応答やゾーン転送用）に加えUDP/53（通常の問合せ）も使うため、
+            - strong [ref=f1e853]: イ＝UDP/53
+            - text: です（②：DNSの一般知識）。行3（DMZ→インターネット、送信元ア、宛先any）は外部DNSサーバ自身が他のドメインの権威DNSサーバへ問い合わせにいく通信で、同じくア＝
+            - strong [ref=f1e854]: 外部DNSサーバ
+            - text: です。
+        - listitem [ref=f1e856]:
+          - paragraph [ref=f1e864]:
+            - strong [ref=f1e865]: ウ（行2）
+            - text: ": インターネット→DMZ、宛先ウ、TCP/443。社外から直接HTTPSアクセスされる対象は、DMZ内で唯一「外部公開」を目的とするサーバ、すなわち"
+            - strong [ref=f1e866]: 公開Webサーバ
+            - text: です（①：図1の構成＋一般的なDMZ設計）。
+        - listitem [ref=f1e868]:
+          - paragraph [ref=f1e876]:
+            - strong [ref=f1e877]: エ・オ（行4）
+            - text: ": DMZ→インターネット、送信元エ、宛先オ、TCP/80,443。本文(v)「マルウェア定義ファイルの更新は、プロキシサーバ経由で行う。」（①）から、DMZ側からインターネットのWebサイトへ実際にアクセスするのは"
+            - strong [ref=f1e878]: プロキシサーバ
+            - text: （エ）であり、宛先はインターネット上の不特定多数のサイトなので
+            - strong [ref=f1e879]: any
+            - text: （オ）です。
+        - listitem [ref=f1e881]:
+          - paragraph [ref=f1e889]:
+            - strong [ref=f1e890]: カ（行5）
+            - text: ": 内部LAN→DMZ、送信元カ、宛先ア（外部DNSサーバ）、TCP/53,イ。本文(i)「社内DNSサーバは、内部LANのゾーン情報を管理し、内部LAN以外のゾーンのホストの名前解決要求は、外部DNSサーバに転送する。」（①）とそのまま対応しており、カ＝"
+            - strong [ref=f1e891]: 社内DNSサーバ
+            - text: です。
+      - heading "3-2. ケルベロス認証の概要と通信手順" [level=3] [ref=f1e892]
+      - code [ref=f1e895]: "@startuml title 図2: PCの起動から営業支援サーバアクセスまでの通信手順(ケルベロス認証) actor \"社員\" as User participant \"PC\" as PC participant \"DS(KDC)\" as KDC participant \"営業支援サーバ\" as Srv User -> PC : PC起動/ID,PW入力 PC -> KDC : ①認証要求(ID, PW) KDC -> PC : ②認証成功(TGT)\\n※PCの鍵で暗号化 note right of PC ②はPCの鍵で暗号化されているため、 盗聴してもTGTの中身は復号できない。 end note User -> PC : Webブラウザ起動/\\n営業支援サーバアクセス PC -> Srv : ③HTTP要求 Srv -> PC : ④HTTP応答(401,\\nWWW-Authenticate: Negotiate) PC -> KDC : ⑤営業支援サーバ用のST要求(TGT) KDC -> PC : ⑥ST払出し(ST)\\n※営業支援サーバの鍵でST暗号化、\\nさらに全体をPCの鍵で暗号化 PC -> Srv : ⑦HTTP要求\\n(ケルベロス認証向けAPIでST提示) Srv -> PC : ⑧HTTP応答(200 OK, 認証成功) PC -> Srv : HTTP通信 note over PC, KDC ①②⑤⑥がKDC(ポート88)との\\nケルベロス認証そのものの通信。 ③④⑦⑧はPC⇔営業支援サーバ間のHTTP(S)通信。 end note @enduml"
+      - 'heading "設問2(1): ②の通信を盗聴されても⑦を正しく行えない理由は？（15字以内）" [level=3] [ref=f1e896]'
+      - paragraph [ref=f1e897]:
+        - strong [ref=f1e898]: "答え: STを取り出せないから"
+      - paragraph [ref=f1e899]: 本文⑥「KDCは…営業支援サーバの鍵でSTを暗号化する。さらに、KDCは、暗号化したSTにセッション鍵などを付加し、全体をPCの鍵で暗号化した情報をPCに払い出す。」（①）とあります。②の通信で送られるのはTGTであり、しかもPCの鍵で暗号化されています。⑦で提示すべき「ST」はこの②の通信には含まれておらず、⑤⑥という別の通信で別途取得するものです。したがって②を盗聴しただけでは、攻撃者は⑦で提示すべきSTそのものを手に入れることができません。
+      - 'heading "設問2(2): 図2の中で、ポート88（ケルベロス認証サービス）が用いられる通信は？" [level=3] [ref=f1e900]'
+      - paragraph [ref=f1e901]:
+        - strong [ref=f1e902]: "答え: ①、②、⑤、⑥"
+      - paragraph [ref=f1e903]: ケルベロス認証プロトコル自体の標準ポートが88であることは前提知識（②）です。図2の登場人物のうち、PCとKDC（DS）が直接やり取りしているのは①②（認証要求／TGT発行）と⑤⑥（ST要求／ST払出し）で、これがケルベロス認証そのものの通信です。③④⑦⑧はPC⇔営業支援サーバ間のHTTP（S）通信であり、別のポート（80/443）を使います（①：図2の登場人物の対応関係）。
+      - 'heading "設問2(3): 下線(c)の問題を発生させないための対応策は？（20字以内）" [level=3] [ref=f1e904]'
+      - paragraph [ref=f1e905]:
+        - strong [ref=f1e906]: "答え: PCとサーバ間で時刻同期を行う。"
+      - paragraph [ref=f1e907]: ケルベロス認証はチケットの有効期限判定に「現在時刻」を用いるため、PCとサーバの時計にずれがあると、有効期限内のチケットでも「期限切れ」と誤判定されることがある、というケルベロス認証の既知の弱点（②）です。対策として、NTPなどでPCとサーバの時刻を同期させます。
+      - heading "3-3. SRVレコードの働きと設定内容" [level=3] [ref=f1e908]
+      - code [ref=f1e911]: "@startuml title SRVレコードによるKDCの発見(図4のケース) participant \"PC\" as PC participant \"社内DNSサーバ\" as DNS participant \"DS1(KDC)\" as DS1 participant \"DS2(KDC)\" as DS2 PC -> DNS : SRVレコード問合せ\\n(_kerberos._tcp.naibulan.y-sha.jp) DNS -> PC : 応答: DS1(Priority120,Weight2)\\n DS2(Priority120,Weight1) note right of PC Priorityが同じなので、 Weightの比率(2:1)で 問い合わせ先を選ぶ。 TTL=43200秒(720分)の間は この結果をキャッシュする。 end note PC -> DS1 : 確率2/3でKDC通信を選択 PC -> DS2 : 確率1/3でKDC通信を選択 @enduml"
+      - 'heading "設問3(1): SRVレコードを利用しない場合、PCに設定しなければならない情報は？（25字以内）" [level=3] [ref=f1e912]'
+      - paragraph [ref=f1e913]:
+        - strong [ref=f1e914]: "答え: ケルベロス認証を行うサーバのFQDN"
+      - paragraph [ref=f1e915]: 本文「DNSサーバにSRVレコードが登録されていれば、サービス名を問い合わせることによって、当該サービスが稼働するホスト名などの情報が取得できる。」（①）の裏返しです。SRVレコードが無いと、PCはKDC（ケルベロス認証を行うサーバ）のホスト名を自動的に発見できないため、あらかじめそのFQDNをPC側に手動設定しておく必要があります。
+      - 'heading "設問3(2): 図4のSRVレコードがPCのキャッシュに存在する時間は？" [level=3] [ref=f1e916]'
+      - paragraph [ref=f1e917]:
+        - strong [ref=f1e918]: "答え: 720分"
+      - paragraph [ref=f1e919]:
+        - text: 図4のTTL＝43200（秒）（①）。DNSレコードはTTLで指定された秒数だけキャッシュされる、というDNSの一般知識（②）から、43200秒 ÷ 60 =
+        - strong [ref=f1e920]: 720分
+        - text: です。
+      - 'heading "設問3(3): 図5の1つのSRVレコードで、図4と同様の比率（2:1）でDS1・DS2を使わせるためのAレコードの設定内容は？（50字以内）" [level=3] [ref=f1e921]'
+      - paragraph [ref=f1e922]:
+        - strong [ref=f1e923]: "答え: ホスト名がDSに対して、add1のAレコードを二つ、add2のAレコードを一つ記述する。"
+      - paragraph [ref=f1e924]:
+        - text: 図4のWeightはDS1＝2、DS2＝1で、比率は2:1です（①）。図5では1本のSRVレコード（Target＝DS.naibulan.y-sha.jp）しかなく、Weightによる比率づけができないため、代わりに
+        - strong [ref=f1e925]: DNSラウンドロビン
+        - text: （②）で比率を再現します。具体的には、同じホスト名「DS」に対してAレコードを複数登録しておくと、登録数の割合に応じてランダムに異なるIPアドレスが返るようになるので、DS1のアドレス（add1）を2つ、DS2のアドレス（add2）を1つ登録すれば、図4と同じ2:1の比率を再現できます。
+      - separator [ref=f1e926]
+      - heading "4. まとめ（学習ポイント）" [level=2] [ref=f1e927]
+      - list [ref=f1e928]:
+        - listitem [ref=f1e930]:
+          - paragraph [ref=f1e938]:
+            - strong [ref=f1e939]: 問1
+            - text: は、IT（事務所）とOT（工場）を繋ぐときのセキュリティ設計が題材でした。FTAは「ルーティングしないファイル受渡し専用アプライアンス」、NPBは「入出力ポートの組を事前定義してパケットを複製する装置」という役割の違いを正確に押さえることが全設問の土台です。ミラーポート（1ポートに集約）とネットワークタップ（送受信で2ポート）の帯域の違いは、実務でもよく問われる典型パターンです。
+        - listitem [ref=f1e941]:
+          - paragraph [ref=f1e949]:
+            - strong [ref=f1e950]: 問2
+            - text: は、VRFで「同じ宛先でも所属するテーブルが違えば別経路になる」という考え方と、IPsecの「IKE SA→Child SA」という2段階のネゴシエーション構造が核心でした。ESPのカプセル化の順番（トレーラ付加→暗号化→新IPヘッダ／ESPヘッダ付加）も頻出パターンです。
+        - listitem [ref=f1e952]:
+          - paragraph [ref=f1e960]:
+            - strong [ref=f1e961]: 問3
+            - text: はケルベロス認証の「TGTとSTの2段階チケット」「チケットは常に受信者の鍵で暗号化されているため盗聴だけでは中身が読めない」という设計と、SRVレコードによるサービスディスカバリ（Priority＝優先度、Weight＝同一優先度内の比率）の仕組みが核心でした。DNSラウンドロビンとSRVレコードのWeightは、どちらも負荷分散を実現する手段ですが、制御できる粒度が異なる点（Weightは明示的な比率指定、ラウンドロビンはAレコードの登録数で疑似的に比率を作る）を対比して理解しておくと応用が効きます。
+      - paragraph [ref=f1e962]
+  - complementary [ref=f1e963]:
+    - generic [ref=f1e964]:
+      - generic [ref=f1e965]: table of contents
+      - button "»" [expanded] [ref=f1e966] [cursor=pointer]
+    - list [ref=f1e967]:
+      - listitem [ref=f1e968]:
+        - button "令和4年度 春期 ネットワークスペシャリスト試験 午後Ⅰ 問1・問2・問3 解説" [ref=f1e969] [cursor=pointer]
+      - listitem [ref=f1e970]:
+        - button "0. 用語辞典" [ref=f1e971] [cursor=pointer]
+      - listitem [ref=f1e972]:
+        - button "問1（ネットワークの更改）で登場する用語" [ref=f1e973] [cursor=pointer]
+      - listitem [ref=f1e974]:
+        - button "問2（セキュアゲートウェイサービスの導入）で登場する用語" [ref=f1e975] [cursor=pointer]
+      - listitem [ref=f1e976]:
+        - button "問3（シングルサインオンの導入）で登場する用語" [ref=f1e977] [cursor=pointer]
+      - listitem [ref=f1e978]:
+        - 'button "1. 問1: ネットワークの更改（IT/OT接続）" [ref=f1e979] [cursor=pointer]'
+      - listitem [ref=f1e980]:
+        - button "1-1. 現状のネットワーク構成（図1）" [ref=f1e981] [cursor=pointer]
+      - listitem [ref=f1e982]:
+        - 'button "設問1(1): 空欄a〜c" [ref=f1e983] [cursor=pointer]'
+      - listitem [ref=f1e984]:
+        - 'button "設問1(2): DMZに設置するとOAセグメントに設置するのに比べて軽減されるセキュリティリスクは？（40字以内）" [ref=f1e985] [cursor=pointer]'
+      - listitem [ref=f1e986]:
+        - button "1-2. 管理セグメントとOAセグメント間のファイルの受渡し（FTA）" [ref=f1e987] [cursor=pointer]
+      - listitem [ref=f1e988]:
+        - 'button "設問2(1): 下線①のFTAへのログイン認証を既存のサーバで一元管理するなら、どのサーバから認証情報を取得するのが良いか？" [ref=f1e989] [cursor=pointer]'
+      - listitem [ref=f1e990]:
+        - 'button "設問2(2): 下線②について、FTAにアクセスできるのはどのセグメントか？（全て答えよ）" [ref=f1e991] [cursor=pointer]'
+      - listitem [ref=f1e992]:
+        - 'button "設問2(3): 下線③について、FTAにおいて認証と認可はそれぞれ何のために使われるか（違いが分かるようにそれぞれ25字以内）" [ref=f1e993] [cursor=pointer]'
+      - listitem [ref=f1e994]:
+        - button "1-3. 測定データの可視化（NPB・ミラーポート）" [ref=f1e995] [cursor=pointer]
+      - listitem [ref=f1e996]:
+        - 'button "設問3(1): 空欄d" [ref=f1e997] [cursor=pointer]'
+      - listitem [ref=f1e998]:
+        - 'button "設問3(2): 下線④について、ミラーポート方式はネットワークタップ方式と比べて性能面でどのような制約が生じるか？（40字以内）" [ref=f1e999] [cursor=pointer]'
+      - listitem [ref=f1e1000]:
+        - 'button "設問3(3): 下線⑤について、1ポートだけからミラーパケットを取得する場合、どの装置が接続されているポートを設定すべきか？" [ref=f1e1001] [cursor=pointer]'
+      - listitem [ref=f1e1002]:
+        - 'button "設問3(4): サーバでミラーパケットを受信するためのインタフェースのモードと、それによって受信できるようになるフレームは？（30字以内）" [ref=f1e1003] [cursor=pointer]'
+      - listitem [ref=f1e1004]:
+        - 'button "設問3(5): キャプチャサーバに1,000日間のミラーパケットを保存するのに必要なディスク容量は？" [ref=f1e1005] [cursor=pointer]'
+      - listitem [ref=f1e1006]:
+        - 'button "2. 問2: セキュアゲートウェイサービスの導入" [ref=f1e1007] [cursor=pointer]'
+      - listitem [ref=f1e1008]:
+        - button "2-1. 現行のネットワーク構成とVRF" [ref=f1e1009] [cursor=pointer]
+      - listitem [ref=f1e1010]:
+        - 'button "設問1(1): 下線①のIPアドレスを、表1中のIPアドレスで答えよ" [ref=f1e1011] [cursor=pointer]'
+      - listitem [ref=f1e1012]:
+        - 'button "設問1(2): 空欄a（VRFの説明部分）" [ref=f1e1013] [cursor=pointer]'
+      - listitem [ref=f1e1014]:
+        - 'button "設問1(3): 表2の空欄b〜d" [ref=f1e1015] [cursor=pointer]'
+      - listitem [ref=f1e1016]:
+        - 'button "設問1(4): \"本社のIPsecルータ\"が、営業所のPCからP社営業支援サービス宛てのパケットを転送するときに選択する経路は？" [ref=f1e1017] [cursor=pointer]'
+      - listitem [ref=f1e1018]:
+        - 'button "設問1(5): 下線②について、静的なデフォルトルートが必要な理由は？（40字以内）" [ref=f1e1019] [cursor=pointer]'
+      - listitem [ref=f1e1020]:
+        - 'button "設問1(6): 下線③（OSPFに静的経路を再配布）の宛先ネットワークは？" [ref=f1e1021] [cursor=pointer]'
+      - listitem [ref=f1e1022]:
+        - button "2-2. 新規ネットワークの検討（SGWサービス・IPsec VPN）" [ref=f1e1023] [cursor=pointer]
+      - listitem [ref=f1e1024]:
+        - 'button "設問2(1): 空欄e〜h" [ref=f1e1025] [cursor=pointer]'
+      - listitem [ref=f1e1026]:
+        - 'button "設問2(2): POPとのIPsec VPNを確立できない場合、失敗しているネゴシエーションを特定するために確認すべき状態は？（本文の字句で二つ）" [ref=f1e1027] [cursor=pointer]'
+      - listitem [ref=f1e1028]:
+        - button "2-3. 接続テスト" [ref=f1e1029] [cursor=pointer]
+      - listitem [ref=f1e1030]:
+        - 'button "設問3(1): 下線④について、情報セキュリティの観点でR主任が確認した内容は？（20字以内）" [ref=f1e1031] [cursor=pointer]'
+      - listitem [ref=f1e1032]:
+        - 'button "設問3(2): 下線⑤について、P社営業支援サービスの応答時間が現行より長くなると考えられる要因は？（30字以内）" [ref=f1e1033] [cursor=pointer]'
+      - listitem [ref=f1e1034]:
+        - 'button "3. 問3: シングルサインオンの導入（ケルベロス認証）" [ref=f1e1035] [cursor=pointer]'
+      - listitem [ref=f1e1036]:
+        - button "3-1. ネットワーク構成及び機器の設定と利用形態" [ref=f1e1037] [cursor=pointer]
+      - listitem [ref=f1e1038]:
+        - 'button "設問1(1): 下線(a)の動作のために、PCのプロキシ設定で登録すべき内容は？（40字以内）" [ref=f1e1039] [cursor=pointer]'
+      - listitem [ref=f1e1040]:
+        - 'button "設問1(2): 下線(b)について、(iii)〜(v)の実行のために必要な「その他のネットワーク情報」を二つ答えよ" [ref=f1e1041] [cursor=pointer]'
+      - listitem [ref=f1e1042]:
+        - 'button "設問1(3)・(4): 表1の空欄ア〜カ" [ref=f1e1043] [cursor=pointer]'
+      - listitem [ref=f1e1044]:
+        - button "3-2. ケルベロス認証の概要と通信手順" [ref=f1e1045] [cursor=pointer]
+      - listitem [ref=f1e1046]:
+        - 'button "設問2(1): ②の通信を盗聴されても⑦を正しく行えない理由は？（15字以内）" [ref=f1e1047] [cursor=pointer]'
+      - listitem [ref=f1e1048]:
+        - 'button "設問2(2): 図2の中で、ポート88（ケルベロス認証サービス）が用いられる通信は？" [ref=f1e1049] [cursor=pointer]'
+      - listitem [ref=f1e1050]:
+        - 'button "設問2(3): 下線(c)の問題を発生させないための対応策は？（20字以内）" [ref=f1e1051] [cursor=pointer]'
+      - listitem [ref=f1e1052]:
+        - button "3-3. SRVレコードの働きと設定内容" [ref=f1e1053] [cursor=pointer]
+      - listitem [ref=f1e1054]:
+        - 'button "設問3(1): SRVレコードを利用しない場合、PCに設定しなければならない情報は？（25字以内）" [ref=f1e1055] [cursor=pointer]'
+      - listitem [ref=f1e1056]:
+        - 'button "設問3(2): 図4のSRVレコードがPCのキャッシュに存在する時間は？" [ref=f1e1057] [cursor=pointer]'
+      - listitem [ref=f1e1058]:
+        - 'button "設問3(3): 図5の1つのSRVレコードで、図4と同様の比率（2:1）でDS1・DS2を使わせるためのAレコードの設定内容は？（50字以内）" [ref=f1e1059] [cursor=pointer]'
+      - listitem [ref=f1e1060]:
+        - button "4. まとめ（学習ポイント）" [ref=f1e1061] [cursor=pointer]

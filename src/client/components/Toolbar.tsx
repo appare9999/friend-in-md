@@ -17,6 +17,7 @@ interface Props {
   onShowLatexCheatsheet: () => void;
   onExportPdf?: () => void;
   onExportPptx?: () => void;
+  onPresent?: () => void;
   pptxExporting?: boolean;
   viewOnly?: boolean;
   marpTheme?: MarpTheme;
@@ -41,6 +42,7 @@ export function Toolbar({
   onShowLatexCheatsheet,
   onExportPdf,
   onExportPptx,
+  onPresent,
   pptxExporting,
   viewOnly,
   marpTheme,
@@ -76,6 +78,11 @@ export function Toolbar({
       {onExportPptx && (
         <button onClick={onExportPptx} disabled={pptxExporting} title="Export this Marp deck as a PowerPoint file">
           {pptxExporting ? "Converting…" : "🎞 Export PowerPoint"}
+        </button>
+      )}
+      {onPresent && (
+        <button onClick={onPresent} title="Fullscreen slideshow - also opens a presenter-notes window you can drag to a second display">
+          ▶ Present
         </button>
       )}
 

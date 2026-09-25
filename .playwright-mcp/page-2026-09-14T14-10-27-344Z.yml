@@ -1,0 +1,14 @@
+- generic [ref=f4e3]:
+  - complementary [ref=f4e4]:
+    - generic [ref=f4e5]:
+      - button "«" [expanded] [ref=f4e6] [cursor=pointer]
+      - generic "/tmp/friend-in-md-autosave-test"
+      - button "📝 Quick note" [ref=f4e7] [cursor=pointer]
+      - button "⚙" [ref=f4e8] [cursor=pointer]
+      - button "↑ Parent folder" [ref=f4e9] [cursor=pointer]
+      - button "Change folder" [ref=f4e10] [cursor=pointer]
+    - generic "/tmp/friend-in-md-autosave-test" [ref=f4e11]
+    - searchbox "Search markdown files…" [ref=f4e13]
+    - list
+  - main [ref=f4e14]:
+    - generic [ref=f4e15]: Loading…

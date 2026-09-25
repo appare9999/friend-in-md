@@ -47,6 +47,12 @@ export function RootPicker({ onSelect }: Props) {
     setError(null);
     try {
       const path = await pickFolderNative();
+      if (path === null) {
+        // User closed the dialog without picking a folder - not an error,
+        // just let them try again.
+        setBusy(false);
+        return;
+      }
       await handleUse(path);
     } catch {
       setNativeUnavailable(true);
@@ -74,7 +80,10 @@ export function RootPicker({ onSelect }: Props) {
 
   return (
     <div className="root-picker">
-      <h1>You've got a friend in md (and csv)</h1>
+      <h1 className="root-picker-title">
+        <img src="/icons/logo-256.png" alt="" className="root-picker-logo" />
+        You've got a friend in md (and csv)
+      </h1>
       <p>Choose the folder of markdown files you want to browse and edit.</p>
 
       {!nativeUnavailable && (

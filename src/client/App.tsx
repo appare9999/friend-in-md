@@ -4,23 +4,28 @@ import { DEFAULT_CSV_LIMIT_BYTES, MAX_CSV_LIMIT_BYTES, MIN_CSV_LIMIT_BYTES } fro
 import { FileTree } from "./components/FileTree.js";
 import { Editor, type EditorHandle } from "./components/Editor.js";
 import { CsvEditor } from "./components/CsvEditor.js";
+import type { CsvFillMode } from "./lib/csvGrid.js";
 import { Toolbar } from "./components/Toolbar.js";
 import { RootPicker } from "./components/RootPicker.js";
 import { SearchPanel } from "./components/SearchPanel.js";
 import { ImagePickerModal } from "./components/ImagePickerModal.js";
 import { LatexCheatsheetModal } from "./components/LatexCheatsheetModal.js";
 import { MarpSlideView } from "./components/MarpSlideView.js";
+import { MarpPresentationView } from "./components/MarpPresentationView.js";
 import { Toc } from "./components/Toc.js";
 import { relativePosixPath } from "./lib/relativePath.js";
+import { parentOfAbsolutePath } from "./lib/absolutePath.js";
 import { extractToc } from "./lib/markdownToc.js";
 import { BUILTIN_MARP_THEMES, getMarpTheme, isMarpDocument, type MarpTheme } from "./lib/marp.js";
 import {
   exportPptxUrl,
   fetchFile,
   fetchMarpThemes,
+  fetchQuickNoteFolder,
   fetchRootStatus,
   fetchTree,
   lockFile,
+  pickQuickNoteFolder,
   saveFile,
   searchFiles,
   setMarpTheme,
@@ -31,6 +36,7 @@ import {
 } from "./http/client.js";
 
 const DEFAULT_LOCK: LockEntry = { locked: true, lockedAt: null };
+const AUTOSAVE_IDLE_MS = 3000;
 const LAST_FILE_KEY = "friend-in-md:lastFile";
 const SIDEBAR_WIDTH_KEY = "friend-in-md:sidebarWidth";
 const DEFAULT_SIDEBAR_WIDTH = 340;
@@ -70,6 +76,7 @@ const FONT_OPTIONS: FontOption[] = [
 const DEFAULT_FONT_ID = FONT_OPTIONS[0].id;
 
 const CSV_LIMIT_KEY = "friend-in-md:csvLimitBytes";
+const CSV_FILL_MODE_KEY = "friend-in-md:csvFillMode";
 
 function readSidebarWidth(): number {
   try {
@@ -162,6 +169,22 @@ function writeCsvLimitBytes(bytes: number): void {
   }
 }
 
+function readCsvFillMode(): CsvFillMode {
+  try {
+    return localStorage.getItem(CSV_FILL_MODE_KEY) === "copy" ? "copy" : "series";
+  } catch {
+    return "series";
+  }
+}
+
+function writeCsvFillMode(mode: CsvFillMode): void {
+  try {
+    localStorage.setItem(CSV_FILL_MODE_KEY, mode);
+  } catch {
+    // localStorage unavailable (private mode etc) - just skip persistence
+  }
+}
+
 function formatBytes(bytes: number): string {
   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   return `${Math.round(bytes / 1024)} KB`;
@@ -226,12 +249,16 @@ export default function App() {
   const [tocWidth, setTocWidth] = useState(() => readTocWidth());
   const [fontId, setFontId] = useState(() => readFontId());
   const [csvLimitBytes, setCsvLimitBytes] = useState(() => readCsvLimitBytes());
+  const [csvFillMode, setCsvFillMode] = useState<CsvFillMode>(() => readCsvFillMode());
   const [showSidebarSettings, setShowSidebarSettings] = useState(false);
   const [tocCollapsed, setTocCollapsed] = useState(false);
   const [showLatexCheatsheet, setShowLatexCheatsheet] = useState(false);
+  const [showPresentation, setShowPresentation] = useState(false);
   const [pptxExporting, setPptxExporting] = useState(false);
   const [marpThemeSaving, setMarpThemeSaving] = useState(false);
   const [customMarpThemes, setCustomMarpThemes] = useState<CustomMarpTheme[]>([]);
+  const [quickNoteFolder, setQuickNoteFolderState] = useState<string | null>(null);
+  const [quickNoteFolderSaving, setQuickNoteFolderSaving] = useState(false);
   // Bumped whenever an external change (e.g. an AI tool editing the file on
   // disk) refreshes draft/originalContent - included in the editor's `key`
   // so Milkdown/the CSV grid remount and pick up the new content instead of
@@ -244,6 +271,8 @@ export default function App() {
   // point in time - this ref keeps it current without resubscribing on
   // every keystroke.
   const hasUnsavedChangesRef = useRef(false);
+  const rootRef = useRef<string | null>(null);
+  rootRef.current = rootStatus?.root ?? null;
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -290,6 +319,34 @@ export default function App() {
     if (rootStatus?.root) reloadTree();
   }, [rootStatus?.root, reloadTree]);
 
+  // Show the root folder name in the browser tab so multiple tabs are distinguishable.
+  useEffect(() => {
+    const root = rootStatus?.root;
+    const folderName = root?.replace(/[\\/]+$/, "").split(/[\\/]/).pop();
+    document.title = folderName ? `${folderName} - friend in md` : "You've got a friend in md";
+  }, [rootStatus?.root]);
+
+  // Independent of rootStatus.root - the quick-note folder is a standalone
+  // setting, not scoped to whichever vault happens to be open.
+  useEffect(() => {
+    fetchQuickNoteFolder()
+      .then((res) => setQuickNoteFolderState(res.folder))
+      .catch(() => {
+        // quick-note folder setting is a nice-to-have - fall back to "not set"
+      });
+  }, []);
+
+  const handlePickQuickNoteFolder = useCallback(() => {
+    setQuickNoteFolderSaving(true);
+    pickQuickNoteFolder()
+      .then((res) => {
+        // Cancelled: leave the previously configured folder untouched.
+        if (!res.cancelled) setQuickNoteFolderState(res.folder);
+      })
+      .catch((err) => setError((err as Error).message))
+      .finally(() => setQuickNoteFolderSaving(false));
+  }, []);
+
   // Restore the last-opened file after a page reload - the server keeps the
   // root across reloads, but selectedPath is plain React state and would
   // otherwise reset to the blank "select a file" screen every time.
@@ -301,32 +358,59 @@ export default function App() {
   }, [rootStatus?.root]);
 
   useEffect(() => {
+    const refreshSelectedFile = () => {
+      if (!selectedPath || hasUnsavedChangesRef.current) return;
+      fetchFile(selectedPath, csvLimitBytes)
+        .then((res) => {
+          setOriginalContent(res.content);
+          setDraft(res.content);
+          setLock(res.lock);
+          setContentVersion((v) => v + 1);
+        })
+        .catch(() => {
+          // transient read failure (e.g. mid-write) - next change event will retry
+        });
+    };
+
+    const handleReconnect = async () => {
+      const known = rootRef.current;
+      const status = await fetchRootStatus().catch(() => null);
+      if (!status) return;
+      if (!status.root && known) {
+        // The server restarted (e.g. `tsx watch` in dev) and forgot its
+        // folder, so it would never send change events for it - reopen it.
+        await setRoot(known).catch(() => {});
+      } else if (status.root !== known) {
+        setRootStatus(status);
+        resetFileState(setSelectedPath, setDraft, setOriginalContent, setLock);
+        return;
+      }
+      // Changes made while disconnected produced no events.
+      reloadTree();
+      refreshSelectedFile();
+    };
+
     const unsubscribe = subscribeEvents((event) => {
       if (event.type === "root-changed") {
+        // Re-opening the current folder (e.g. restored after a server
+        // restart) shouldn't throw away the open file.
+        if (event.status.root === rootRef.current) {
+          reloadTree();
+          return;
+        }
         setRootStatus(event.status);
         resetFileState(setSelectedPath, setDraft, setOriginalContent, setLock);
       } else if (event.type === "tree-changed") {
         reloadTree();
       } else if (event.type === "file-changed" && event.path === selectedPath) {
         reloadTree();
-        if (!hasUnsavedChangesRef.current) {
-          fetchFile(event.path, csvLimitBytes)
-            .then((res) => {
-              setOriginalContent(res.content);
-              setDraft(res.content);
-              setLock(res.lock);
-              setContentVersion((v) => v + 1);
-            })
-            .catch(() => {
-              // transient read failure (e.g. mid-write) - next change event will retry
-            });
-        }
+        refreshSelectedFile();
       } else if (event.type === "lock-changed" && event.path === selectedPath) {
         setLock(event.lock);
       } else if (event.type === "lock-changed") {
         reloadTree();
       }
-    });
+    }, handleReconnect);
     return unsubscribe;
   }, [reloadTree, selectedPath, csvLimitBytes]);
 
@@ -395,6 +479,19 @@ export default function App() {
       setSaving(false);
     }
   };
+
+  // Autosave: once the user stops typing for a bit, save the draft on their
+  // behalf so unsaved work survives a crash/closed tab without needing a
+  // manual Save click. Skipped while the file is locked (editor is read-only
+  // there anyway) or a save is already in flight.
+  useEffect(() => {
+    if (!hasUnsavedChanges || !selectedPath || loadedPath !== selectedPath || lock.locked || saving) return;
+    const timer = setTimeout(() => {
+      handleSave();
+    }, AUTOSAVE_IDLE_MS);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draft, hasUnsavedChanges, selectedPath, loadedPath, lock.locked, saving]);
 
   const handleLock = async () => {
     if (!selectedPath) return;
@@ -503,15 +600,44 @@ export default function App() {
     writeFontId(id);
   };
 
+  const handleCsvFillModeChange = (mode: CsvFillMode) => {
+    setCsvFillMode(mode);
+    writeCsvFillMode(mode);
+  };
+
   const handleCsvLimitChange = (bytes: number) => {
     setCsvLimitBytes(bytes);
     writeCsvLimitBytes(bytes);
+  };
+
+  // Browsers only honor one activation-gated API call per user gesture -
+  // window.open() and requestFullscreen() can't both fire from the same
+  // click. Going fullscreen is the one that has to always work here, so
+  // opening the presenter notes window is a separate, optional button inside
+  // the slideshow itself (MarpPresentationView) rather than automatic here.
+  const handlePresent = () => {
+    document.documentElement.requestFullscreen?.().catch(() => {});
+    setShowPresentation(true);
   };
 
   const handleChangeFolder = () => {
     resetFileState(setSelectedPath, setDraft, setOriginalContent, setLock);
     setTree([]);
     setRootStatus({ root: null });
+  };
+
+  const handleGoToParentFolder = async () => {
+    if (!rootStatus?.root) return;
+    const parent = parentOfAbsolutePath(rootStatus.root);
+    if (!parent) return;
+    resetFileState(setSelectedPath, setDraft, setOriginalContent, setLock);
+    setTree([]);
+    try {
+      const status = await setRoot(parent);
+      setRootStatus(status);
+    } catch (err) {
+      setError((err as Error).message);
+    }
   };
 
   if (!rootStatus) {
@@ -541,12 +667,27 @@ export default function App() {
             <>
               <span className="sidebar-header-spacer" title={rootStatus.root} />
               <button
+                className="quick-note-launch-btn"
+                onClick={() => window.open("/quick-note.html", "friend-in-md-quick-note", "popup,width=380,height=560")}
+                title="Open the quick-note popup (installable as its own app from within it)"
+              >
+                📝 Quick note
+              </button>
+              <button
                 className="sidebar-settings-btn"
                 onClick={() => setShowSidebarSettings((v) => !v)}
                 title="Settings"
                 aria-expanded={showSidebarSettings}
               >
                 ⚙
+              </button>
+              <button
+                className="parent-folder-btn"
+                onClick={handleGoToParentFolder}
+                disabled={!parentOfAbsolutePath(rootStatus.root)}
+                title="Open the parent of the current folder"
+              >
+                ↑ Parent folder
               </button>
               <button className="change-folder-btn" onClick={handleChangeFolder}>
                 Change folder
@@ -602,6 +743,20 @@ export default function App() {
                 onChange={(e) => handleTocWidthChange(Number(e.target.value))}
               />
             </div>
+            <div className="settings-row quick-note-folder-row">
+              <label>Quick note folder</label>
+              <div className="quick-note-folder-current" title={quickNoteFolder ?? undefined}>
+                {quickNoteFolder ?? "Not set"}
+              </div>
+              <button
+                className="quick-note-folder-browse-btn"
+                onClick={handlePickQuickNoteFolder}
+                disabled={quickNoteFolderSaving}
+                title="Pick the folder to scan for quick notes, using your OS's folder dialog (same as Open folder) - independent of whichever vault is open"
+              >
+                {quickNoteFolder ? "Change…" : "Set folder…"}
+              </button>
+            </div>
             <div className="settings-row">
               <label htmlFor="csv-limit-range">CSV size limit: {formatBytes(csvLimitBytes)}</label>
               <input
@@ -613,6 +768,17 @@ export default function App() {
                 value={csvLimitBytes}
                 onChange={(e) => handleCsvLimitChange(Number(e.target.value))}
               />
+            </div>
+            <div className="settings-row">
+              <label htmlFor="csv-fill-mode-select">CSV fill handle drag</label>
+              <select
+                id="csv-fill-mode-select"
+                value={csvFillMode}
+                onChange={(e) => handleCsvFillModeChange(e.target.value as CsvFillMode)}
+              >
+                <option value="series">Series (1, 2, 3…)</option>
+                <option value="copy">Copy (1, 1, 1…)</option>
+              </select>
             </div>
           </div>
         )}
@@ -661,6 +827,7 @@ export default function App() {
               onShowLatexCheatsheet={() => setShowLatexCheatsheet(true)}
               onExportPdf={isMarkdown ? handleExportPdf : undefined}
               onExportPptx={isMarp ? handleExportPptx : undefined}
+              onPresent={isMarp ? handlePresent : undefined}
               pptxExporting={pptxExporting}
               viewOnly={isMarp}
               marpTheme={marpTheme}
@@ -669,6 +836,13 @@ export default function App() {
               marpThemeSaving={marpThemeSaving}
             />
             {showLatexCheatsheet && <LatexCheatsheetModal onClose={() => setShowLatexCheatsheet(false)} />}
+            {showPresentation && isMarp && (
+              <MarpPresentationView
+                content={draft}
+                customThemes={customMarpThemes}
+                onClose={() => setShowPresentation(false)}
+              />
+            )}
             <div className="editor-pane">
               {isMarp ? (
                 <MarpSlideView content={draft} customThemes={customMarpThemes} />
@@ -678,6 +852,7 @@ export default function App() {
                   ref={editorRef}
                   initialValue={draft}
                   readOnly={lock.locked}
+                  fillMode={csvFillMode}
                   onChange={setDraft}
                 />
               ) : (

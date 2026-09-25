@@ -34,36 +34,38 @@ async function walk(root: string, relDir: string, maxCsvBytes: number): Promise<
   }
   entries.sort((a, b) => a.name.localeCompare(b.name));
 
-  const nodes: FileTreeNode[] = [];
-  for (const entry of entries) {
-    if (entry.name.startsWith(".") || IGNORED.has(entry.name)) continue;
-    const relPath = relDir ? `${relDir}/${entry.name}` : entry.name;
+  // Subdirectories are walked concurrently rather than one at a time - for
+  // a vault with many folders, sequential awaits here serialize every
+  // readdir in the tree and make opening a large folder noticeably slow.
+  const nodes = await Promise.all(
+    entries.map(async (entry): Promise<FileTreeNode | null> => {
+      if (entry.name.startsWith(".") || IGNORED.has(entry.name)) return null;
+      const relPath = relDir ? `${relDir}/${entry.name}` : entry.name;
 
-    if (entry.isDirectory()) {
-      const children = await walk(root, relPath, maxCsvBytes);
-      if (children.length > 0) {
-        nodes.push({ name: entry.name, path: toPosix(relPath), type: "dir", children });
+      if (entry.isDirectory()) {
+        const children = await walk(root, relPath, maxCsvBytes);
+        if (children.length === 0) return null;
+        return { name: entry.name, path: toPosix(relPath), type: "dir", children };
       }
-      continue;
-    }
 
-    if (!entry.isFile()) continue;
-    const fileKind = fileKindFor(path.extname(entry.name).toLowerCase());
-    if (!fileKind) continue;
+      if (!entry.isFile()) return null;
+      const fileKind = fileKindFor(path.extname(entry.name).toLowerCase());
+      if (!fileKind) return null;
 
-    let tooLarge = false;
-    if (fileKind === "csv") {
-      try {
-        const stat = await fs.stat(path.join(absDir, entry.name));
-        tooLarge = stat.size > maxCsvBytes;
-      } catch {
-        continue;
+      let tooLarge = false;
+      if (fileKind === "csv") {
+        try {
+          const stat = await fs.stat(path.join(absDir, entry.name));
+          tooLarge = stat.size > maxCsvBytes;
+        } catch {
+          return null;
+        }
       }
-    }
 
-    nodes.push({ name: entry.name, path: toPosix(relPath), type: "file", fileKind, tooLarge });
-  }
-  return nodes;
+      return { name: entry.name, path: toPosix(relPath), type: "file", fileKind, tooLarge };
+    })
+  );
+  return nodes.filter((n): n is FileTreeNode => n !== null);
 }
 
 export async function buildFileTree(root: string, maxCsvBytes: number = DEFAULT_CSV_LIMIT_BYTES): Promise<FileTreeNode[]> {

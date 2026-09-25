@@ -20,7 +20,13 @@ explicitly before editing, then lock it again when you're done.
   editable, **Save** to write changes to disk, **Lock** to make it read-only
   again.
 - **CSV editing** — csv files show up in the folder browser too, as an
-  editable spreadsheet-style grid (add/remove rows and columns). Same
+  editable spreadsheet-style grid (add/remove rows and columns, sort by a
+  column from its header menu). Drag or Shift+click to select a range of
+  cells; Ctrl+C / Ctrl+V copy and paste it as tab-separated text (works with
+  Excel / Google Sheets), and the bottom-right shows the sum and average of
+  any numbers in it. Drag the small square at the selection's corner down or
+  right to fill a series (1, 2, 3…) or copies - pick the default in Settings,
+  hold Ctrl while dragging to switch. Same
   lock/unlock/save flow as markdown. Files larger than 2 MB are shown in the
   tree but blocked from opening, so a huge CSV can't lock up the browser.
 - **Search** — searches file names and file contents across every markdown and
@@ -71,7 +77,14 @@ explicitly before editing, then lock it again when you're done.
   there as well. A **🎞 Export PowerPoint** toolbar button converts it to `.pptx` (via
   [`@marp-team/marp-cli`](https://github.com/marp-team/marp-cli)) and
   downloads it — this requires a Chrome/Chromium install on the machine
-  running the server.
+  running the server. A **▶ Present** toolbar button starts a fullscreen
+  slideshow (arrow keys/space/Backspace/Esc to navigate). A **📝 Presenter
+  notes** button inside the slideshow opens the script in a separate
+  window — drag it to a second display; it stays in sync with the slideshow
+  either way (advance from either window). Write the
+  script for a slide as a plain HTML comment inside it (`<!-- like this -->`)
+  — Marp's own convention, so it never
+  renders as visible slide content.
 
 ## How it fits into your workflow
 
@@ -122,27 +135,11 @@ Options:
   prints short emoji lines like "📄 Opened file: notes.md" for what you
   actually did (open/save/lock/search/etc).
 
-## Desktop app (system tray)
+## Quick note popup
 
-Prefer a persistent icon in your taskbar/menu bar over a browser tab you have
-to relaunch? Clone the repo and run the Electron wrapper:
-
-```bash
-git clone https://github.com/appare9999/friend-in-md.git
-cd friend-in-md
-npm install
-npm run electron
-```
-
-This builds the server/client/electron bundles and launches a tray app.
-Click the tray icon (or press **Ctrl/Cmd+Shift+M**) from anywhere to pop up a
-small, read-only **quick note** window — for glancing at something you
-flagged for recall, not editing. Right-click the tray icon for **Open full
-app** (the full editor window), **Open notes folder…**, **Recent folders**,
-**Start at login**, and **Quit**. Closing either window just hides it — the
-server keeps running in the tray until you Quit.
-
-### Quick note popup
+Want to glance at something you flagged for recall — a command, a snippet —
+without opening the full editor? Click **📝 Quick note** in the sidebar. It
+opens a small, read-only popup window separate from the main app.
 
 Flag any markdown file as a quick note by adding this to the very top:
 
@@ -157,30 +154,10 @@ filename). Flag more than one file and a small switcher appears so you can
 flip between them. The popup is view-only by design — open the file in the
 full app if you need to edit it.
 
-It's not published as a ready-made installer yet — run `npm run
-dist:electron` to build one for your own machine
-(`.exe`/`.dmg`/`.AppImage`) via [electron-builder](https://www.electron.build/).
-On Linux, some desktop environments (e.g. GNOME) need a tray-icon extension
-(like "AppIndicator and KStatusNotifierItem Support") for the tray icon to
-show at all.
-
-### Developing the Electron app
-
-`npm run electron` does a full production build every time, which is slow to
-iterate on. For active development, use:
-
-```bash
-npm run electron:dev
-```
-
-This launches the API server, Vite's dev server (with HMR), a `tsc --watch`
-for the Electron main-process code, and the Electron app itself — wired
-together so that:
-
-- React/UI changes (`QuickNoteApp`, `App`, etc.) hot-reload instantly via
-  Vite, no restart.
-- Changes to `electron/*.ts` or `src/server/**` recompile automatically and
-  restart the Electron process (via [electronmon](https://github.com/catdad/electronmon)).
+From inside the popup, click **📌 Install as app** (Chrome/Edge) to install it
+as a standalone app with its own icon in your taskbar/dock/start menu — so you
+can minimize it and bring it back with a click, the same as any other app,
+without keeping a browser tab around.
 
 ## Try it: a hands-on tutorial with `test_md/`
 

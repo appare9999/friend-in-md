@@ -1,0 +1,30 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - button "«" [expanded] [ref=e6] [cursor=pointer]
+      - generic "/tmp/marp_present_test4"
+      - button "📝 Quick note" [ref=e7] [cursor=pointer]
+      - button "⚙" [ref=e8] [cursor=pointer]
+      - button "Change folder" [ref=e9] [cursor=pointer]
+    - generic "/tmp/marp_present_test4" [ref=e10]
+    - searchbox "Search markdown files…" [ref=e12]
+    - list [ref=e13]:
+      - listitem [ref=e14]:
+        - button "🔒deck.md" [active] [ref=e15] [cursor=pointer]
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: deck.md
+      - generic [ref=e20]:
+        - text: "Theme:"
+        - combobox "Theme:" [ref=e21]:
+          - option "default"
+          - option "gaia" [selected]
+          - option "uncover"
+      - button "🖨 Export PDF" [ref=e22]
+      - button "🎞 Export PowerPoint" [ref=e23]
+      - button "▶ Present" [ref=e24]
+    - iframe [ref=e26]:
+      - img [ref=f1e3]:
+        - generic [ref=f1e5]:
+          - heading "Slide One" [level=1] [ref=f1e6]
+          - paragraph [ref=f1e7]: Content of slide one.

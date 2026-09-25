@@ -1,0 +1,14 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - button "«" [expanded] [ref=e6] [cursor=pointer]
+      - generic "/tmp/claude-1000/-home-appare99-friend-in-md/71206d1b-983e-41a2-a805-d316eed03143/scratchpad/vault"
+      - button "📝 Quick note" [ref=e7] [cursor=pointer]
+      - button "⚙" [ref=e8] [cursor=pointer]
+      - button "↑ Parent folder" [ref=e9] [cursor=pointer]
+      - button "Change folder" [ref=e10] [cursor=pointer]
+    - generic "/tmp/claude-1000/-home-appare99-friend-in-md/71206d1b-983e-41a2-a805-d316eed03143/scratchpad/vault" [ref=e11]
+    - searchbox "Search markdown files…" [ref=e13]
+    - list
+  - main [ref=e14]:
+    - generic [ref=e15]: Select a markdown file from the left.

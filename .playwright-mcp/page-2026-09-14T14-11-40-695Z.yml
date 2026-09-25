@@ -1,0 +1,14 @@
+- generic [ref=f5e3]:
+  - complementary [ref=f5e4]:
+    - generic [ref=f5e5]:
+      - button "«" [expanded] [ref=f5e6] [cursor=pointer]
+      - generic "/home/appare99/tools/nws"
+      - button "📝 Quick note" [ref=f5e7] [cursor=pointer]
+      - button "⚙" [ref=f5e8] [cursor=pointer]
+      - button "↑ Parent folder" [ref=f5e9] [cursor=pointer]
+      - button "Change folder" [ref=f5e10] [cursor=pointer]
+    - generic "/home/appare99/tools/nws" [ref=f5e11]
+    - searchbox "Search markdown files…" [ref=f5e13]
+    - list
+  - main [ref=f5e14]:
+    - generic [ref=f5e15]: Select a markdown file from the left.

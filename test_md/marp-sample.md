@@ -1,23 +1,27 @@
 ---
 marp: true
-theme: default
+theme: gaia
 paginate: true
 ---
 
-# Marp サンプルデッキ
+# Marp Sample Deck
 
-friend-in-md の PowerPoint 出力を試すためのファイルです。
+A file for trying out friend-in-md's PowerPoint export.
 
----
-
-## スライド 2
-
-- 箇条書き 1
-- 箇条書き 2
-- 箇条書き 3
+<!-- Speaker notes go here as an HTML comment - they won't render on the slide. -->
 
 ---
 
-## スライド 3
+## Slide 2
 
-編集して **Save** すると、`🎞 パワポ出力` ボタンで `.pptx` に変換できます。
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+<!-- Walk through each bullet point here. -->
+
+---
+
+## Slide 3
+
+Edit and **Save**, then use the `🎞 Export PowerPoint` button to convert it to a `.pptx`.

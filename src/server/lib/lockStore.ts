@@ -1,12 +1,20 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import os from "node:os";
+import crypto from "node:crypto";
 import type { LockEntry, LockState } from "../../shared/types.js";
 
-const STATE_DIR = ".friend-in-md";
+// Lock state lives under the user's home directory, keyed by a hash of the
+// root path, so no folder is ever created inside the vault being edited.
+const CONFIG_DIR = path.join(os.homedir(), ".friend-in-md", "locks");
 const STATE_FILE = "state.json";
 
 // Files are locked (read-only) by default; unlocking is an explicit action.
 const DEFAULT_LOCK: LockEntry = { locked: true, lockedAt: null };
+
+function rootKey(root: string): string {
+  return crypto.createHash("sha256").update(path.resolve(root)).digest("hex").slice(0, 16);
+}
 
 export class LockStore {
   private readonly statePath: string;
@@ -19,10 +27,9 @@ export class LockStore {
   }
 
   static async load(root: string): Promise<LockStore> {
-    const stateDir = path.join(root, STATE_DIR);
+    const stateDir = path.join(CONFIG_DIR, rootKey(root));
     const statePath = path.join(stateDir, STATE_FILE);
     await fs.mkdir(stateDir, { recursive: true });
-    await ensureGitignored(root);
 
     let state: LockState = {};
     try {
@@ -60,19 +67,4 @@ export class LockStore {
     });
     return this.writeQueue;
   }
-}
-
-async function ensureGitignored(root: string): Promise<void> {
-  const gitignorePath = path.join(root, ".gitignore");
-  const entry = `${STATE_DIR}/`;
-  let content = "";
-  try {
-    content = await fs.readFile(gitignorePath, "utf-8");
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
-  }
-  const lines = content.split("\n").map((l) => l.trim());
-  if (lines.includes(entry) || lines.includes(STATE_DIR)) return;
-  const prefix = content.length > 0 && !content.endsWith("\n") ? "\n" : "";
-  await fs.writeFile(gitignorePath, `${content}${prefix}${entry}\n`, "utf-8");
 }

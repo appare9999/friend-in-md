@@ -98,7 +98,27 @@ export interface QuickNoteSummary {
 
 export interface QuickNoteListResponse {
   notes: QuickNoteSummary[];
-  rootOpen: boolean;
+  // Whether a quick-note folder is configured at all - independent of
+  // whether a vault root is currently open.
+  folderOpen: boolean;
+}
+
+export interface QuickNoteFolderResponse {
+  // Absolute path to scan for `quick: true` notes, or null if unset. Set
+  // independently of (and persisted separately from) the open vault root.
+  folder: string | null;
+}
+
+export interface PickQuickNoteFolderResponse {
+  // Present (and non-null) only when the user actually picked a folder.
+  // `cancelled: true` means the dialog was closed without picking one - the
+  // previously configured folder (if any) is left untouched.
+  folder: string | null;
+  cancelled?: boolean;
+}
+
+export interface QuickNoteContentResponse {
+  content: string;
 }
 
 export type ServerEvent =

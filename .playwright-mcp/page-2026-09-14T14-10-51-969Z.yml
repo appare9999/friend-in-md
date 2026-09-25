@@ -1,0 +1,41 @@
+- generic [ref=f4e3]:
+  - complementary [ref=f4e4]:
+    - generic [ref=f4e5]:
+      - button "«" [expanded] [ref=f4e6] [cursor=pointer]
+      - generic "/tmp/friend-in-md-autosave-test"
+      - button "📝 Quick note" [ref=f4e7] [cursor=pointer]
+      - button "⚙" [ref=f4e8] [cursor=pointer]
+      - button "↑ Parent folder" [ref=f4e9] [cursor=pointer]
+      - button "Change folder" [ref=f4e10] [cursor=pointer]
+    - generic "/tmp/friend-in-md-autosave-test" [ref=f4e11]
+    - searchbox "Search markdown files…" [ref=f4e13]
+    - list [ref=f4e16]:
+      - listitem [ref=f4e17]:
+        - button "color-test.md" [ref=f4e18] [cursor=pointer]
+      - listitem [ref=f4e19]:
+        - button "🔒scratch.md" [ref=f4e20] [cursor=pointer]
+  - main [ref=f4e14]:
+    - generic [ref=f4e46]:
+      - generic [ref=f4e47]: color-test.md
+      - button "🖨 Export PDF" [ref=f4e48]
+      - button "📐 LaTeX cheatsheet" [ref=f4e49] [cursor=pointer]
+      - generic [ref=f4e50]:
+        - generic [ref=f4e51]: ✏️ Editing
+        - button "↶ Undo" [ref=f4e52]
+        - button "↷ Redo" [ref=f4e53]
+        - button "🖼 Insert image" [ref=f4e54]
+        - button "Save" [disabled] [ref=f4e55]
+        - button "Lock" [ref=f4e56]
+    - generic [ref=f4e59]:
+      - textbox [active] [ref=f4e60]:
+        - heading "Color test" [level=1] [ref=f4e61]
+        - paragraph [ref=f4e62]: Normal text and this should be red and back to normal.
+        - paragraph [ref=f4e63]: Also legacy blue text here.
+      - generic [ref=f4e71] [cursor=pointer]
+  - complementary [ref=f4e64]:
+    - generic [ref=f4e65]:
+      - generic [ref=f4e66]: table of contents
+      - button "»" [expanded] [ref=f4e67] [cursor=pointer]
+    - list [ref=f4e68]:
+      - listitem [ref=f4e69]:
+        - button "Color test" [ref=f4e70] [cursor=pointer]

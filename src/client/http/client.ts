@@ -5,6 +5,9 @@ import type {
   FileTreeNode,
   LockEntry,
   LockRequest,
+  PickQuickNoteFolderResponse,
+  QuickNoteContentResponse,
+  QuickNoteFolderResponse,
   QuickNoteListResponse,
   RootStatus,
   SearchResponse,
@@ -80,9 +83,11 @@ export async function browse(path?: string): Promise<BrowseResponse> {
   return json<BrowseResponse>(res);
 }
 
-export async function pickFolderNative(): Promise<string> {
+// Resolves to null when the user closed the dialog without picking a folder
+// (not an error) - and still throws if no native dialog is available at all.
+export async function pickFolderNative(): Promise<string | null> {
   const res = await fetch("/api/pick-folder", { method: "POST" });
-  const body = await json<{ path: string }>(res);
+  const body = await json<{ path: string | null }>(res);
   return body.path;
 }
 
@@ -149,14 +154,73 @@ export async function fetchQuickNotes(): Promise<QuickNoteListResponse> {
   return json<QuickNoteListResponse>(res);
 }
 
-export function subscribeEvents(onEvent: (event: ServerEvent) => void): () => void {
-  const source = new EventSource("/api/events");
-  source.onmessage = (msg) => {
-    try {
-      onEvent(JSON.parse(msg.data) as ServerEvent);
-    } catch {
-      // ignore malformed events
-    }
+export async function fetchQuickNoteFolder(): Promise<QuickNoteFolderResponse> {
+  const res = await fetch("/api/quick-note-folder");
+  return json<QuickNoteFolderResponse>(res);
+}
+
+export async function setQuickNoteFolder(folder: string | null): Promise<QuickNoteFolderResponse> {
+  const res = await fetch("/api/quick-note-folder", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ folder }),
+  });
+  return json<QuickNoteFolderResponse>(res);
+}
+
+export async function pickQuickNoteFolder(): Promise<PickQuickNoteFolderResponse> {
+  const res = await fetch("/api/quick-note-folder/pick", { method: "POST" });
+  return json<PickQuickNoteFolderResponse>(res);
+}
+
+export async function fetchQuickNoteContent(path: string): Promise<QuickNoteContentResponse> {
+  const res = await fetch(`/api/quick-note-content?path=${encodeURIComponent(path)}`);
+  return json<QuickNoteContentResponse>(res);
+}
+
+const EVENTS_RETRY_MS = 2000;
+
+// onReconnect fires whenever the stream comes back after dropping (e.g. the
+// server restarted), since events sent meanwhile were missed. EventSource
+// only retries on its own after a network error - a non-200 reply (the Vite
+// dev proxy answers 5xx while the API server is down) closes it for good -
+// so reconnection is handled here instead.
+export function subscribeEvents(
+  onEvent: (event: ServerEvent) => void,
+  onReconnect?: () => void
+): () => void {
+  let source: EventSource | null = null;
+  let retryTimer: ReturnType<typeof setTimeout> | null = null;
+  let connectedBefore = false;
+  let stopped = false;
+
+  const connect = () => {
+    source = new EventSource("/api/events");
+    source.onopen = () => {
+      if (connectedBefore) onReconnect?.();
+      connectedBefore = true;
+    };
+    source.onmessage = (msg) => {
+      try {
+        onEvent(JSON.parse(msg.data) as ServerEvent);
+      } catch {
+        // ignore malformed events
+      }
+    };
+    source.onerror = () => {
+      source?.close();
+      if (stopped || retryTimer) return;
+      retryTimer = setTimeout(() => {
+        retryTimer = null;
+        if (!stopped) connect();
+      }, EVENTS_RETRY_MS);
+    };
   };
-  return () => source.close();
+
+  connect();
+  return () => {
+    stopped = true;
+    if (retryTimer) clearTimeout(retryTimer);
+    source?.close();
+  };
 }
