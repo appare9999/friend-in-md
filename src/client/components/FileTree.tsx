@@ -97,6 +97,7 @@ function TreeNode({ node, selectedPath, onSelect, collapsedDirs, onToggleDir }: 
 
   const isSelected = node.path === selectedPath;
   const isCsv = node.fileKind === "csv";
+  const isImage = node.fileKind === "image";
   return (
     <li>
       <button
@@ -109,6 +110,7 @@ function TreeNode({ node, selectedPath, onSelect, collapsedDirs, onToggleDir }: 
       >
         {node.locked && <span className="lock-icon" title="locked">🔒</span>}
         {isCsv && <span className="file-kind-icon" title="csv">📊</span>}
+        {isImage && <span className="file-kind-icon" title="image">🖼️</span>}
         {node.name}
       </button>
     </li>

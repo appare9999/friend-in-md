@@ -16,6 +16,7 @@ function applyLocks(nodes: FileTreeNode[], ctx: AppContext): FileTreeNode[] {
     if (node.type === "dir") {
       return { ...node, children: applyLocks(node.children ?? [], ctx) };
     }
+    if (node.fileKind === "image") return node;
     return { ...node, locked: ctx.lockStore.get(node.path).locked };
   });
 }

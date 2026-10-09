@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { DEFAULT_CSV_LIMIT_BYTES, MAX_CSV_LIMIT_BYTES, MIN_CSV_LIMIT_BYTES } from "../../shared/types.js";
 import type { FileKind, FileTreeNode } from "../../shared/types.js";
+import { imageMimeFor } from "./assets.js";
 
 const IGNORED = new Set(["node_modules", ".git", ".friend-in-md"]);
 const MARKDOWN_EXT = new Set([".md", ".markdown"]);
@@ -20,6 +21,7 @@ function toPosix(p: string): string {
 export function fileKindFor(ext: string): FileKind | null {
   if (MARKDOWN_EXT.has(ext)) return "markdown";
   if (CSV_EXT.has(ext)) return "csv";
+  if (imageMimeFor(ext)) return "image";
   return null;
 }
 
@@ -83,8 +85,9 @@ export function resolveWithinRoot(root: string, relPath: string): string {
 
 export function resolveSafePath(root: string, relPath: string): string {
   const abs = resolveWithinRoot(root, relPath);
-  const ext = path.extname(abs).toLowerCase();
-  if (!fileKindFor(ext)) {
+  const kind = fileKindFor(path.extname(abs).toLowerCase());
+  // Images are viewed through /api/asset, never read or written as text.
+  if (kind !== "markdown" && kind !== "csv") {
     throw new Error("Only markdown or csv files are allowed");
   }
   return abs;

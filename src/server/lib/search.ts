@@ -32,7 +32,7 @@ export async function searchFiles(root: string, query: string): Promise<SearchRe
 
     const nameMatch = file.name.toLowerCase().includes(needle);
 
-    if (file.tooLarge) {
+    if (file.tooLarge || file.fileKind === "image") {
       if (nameMatch) results.push({ path: file.path, nameMatch, matches: [] });
       continue;
     }

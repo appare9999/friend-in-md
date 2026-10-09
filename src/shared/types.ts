@@ -1,4 +1,4 @@
-export type FileKind = "markdown" | "csv";
+export type FileKind = "markdown" | "csv" | "image";
 
 // CSV is rendered as an in-memory grid of editable DOM cells, which doesn't
 // scale the way a text/WYSIWYG editor does - files past the configured limit

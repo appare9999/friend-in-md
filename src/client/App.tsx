@@ -18,6 +18,7 @@ import { parentOfAbsolutePath } from "./lib/absolutePath.js";
 import { extractToc } from "./lib/markdownToc.js";
 import { BUILTIN_MARP_THEMES, getMarpTheme, isMarpDocument, type MarpTheme } from "./lib/marp.js";
 import {
+  assetUrl,
   exportPptxUrl,
   fetchFile,
   fetchMarpThemes,
@@ -36,6 +37,11 @@ import {
 } from "./http/client.js";
 
 const DEFAULT_LOCK: LockEntry = { locked: true, lockedAt: null };
+const IMAGE_EXT_RE = /\.(png|jpe?g|gif|webp|svg|bmp|avif)$/i;
+
+function isImagePath(path: string): boolean {
+  return IMAGE_EXT_RE.test(path);
+}
 const AUTOSAVE_IDLE_MS = 3000;
 const LAST_FILE_KEY = "friend-in-md:lastFile";
 const SIDEBAR_WIDTH_KEY = "friend-in-md:sidebarWidth";
@@ -293,6 +299,17 @@ export default function App() {
     (path: string) => {
       setSelectedPath(path);
       setLoadedPath(null);
+      // Images are shown straight from /api/asset - no text content or lock.
+      if (isImagePath(path)) {
+        setOriginalContent("");
+        setDraft("");
+        setLock(DEFAULT_LOCK);
+        setLoadedPath(path);
+        setContentVersion(0);
+        setError(null);
+        if (rootStatus?.root) writeLastFile(rootStatus.root, path);
+        return;
+      }
       fetchFile(path, csvLimitBytes)
         .then((res) => {
           setOriginalContent(res.content);
@@ -360,6 +377,11 @@ export default function App() {
   useEffect(() => {
     const refreshSelectedFile = () => {
       if (!selectedPath || hasUnsavedChangesRef.current) return;
+      if (isImagePath(selectedPath)) {
+        // Bumping the version busts the <img> cache so the new file shows.
+        setContentVersion((v) => v + 1);
+        return;
+      }
       fetchFile(selectedPath, csvLimitBytes)
         .then((res) => {
           setOriginalContent(res.content);
@@ -437,7 +459,8 @@ export default function App() {
     return () => clearTimeout(handle);
   }, [searchQuery]);
 
-  const isMarkdown = !!selectedPath && !selectedPath.toLowerCase().endsWith(".csv");
+  const isImage = !!selectedPath && isImagePath(selectedPath);
+  const isMarkdown = !!selectedPath && !isImage && !selectedPath.toLowerCase().endsWith(".csv");
   const isMarp = isMarkdown && isMarpDocument(draft);
   const toc = useMemo(() => (isMarkdown ? extractToc(draft) : []), [isMarkdown, draft]);
 
@@ -807,7 +830,21 @@ export default function App() {
       <main className="main">
         {error && <div className="error-banner">{error}</div>}
 
-        {selectedPath && loadedPath === selectedPath ? (
+        {selectedPath && loadedPath === selectedPath && isImage ? (
+          <>
+            <div className="toolbar">
+              <span className="toolbar-path">{selectedPath}</span>
+            </div>
+            <div className="image-view-pane">
+              <img
+                key={`${loadedPath}:${contentVersion}`}
+                src={`${assetUrl(selectedPath)}&v=${contentVersion}`}
+                alt={selectedPath}
+                onError={() => setError(`Failed to load image: ${selectedPath}`)}
+              />
+            </div>
+          </>
+        ) : selectedPath && loadedPath === selectedPath ? (
           <>
             <Toolbar
               path={selectedPath}
@@ -883,7 +920,7 @@ export default function App() {
         ) : selectedPath ? (
           <div className="empty-state">Loading…</div>
         ) : (
-          <div className="empty-state">Select a markdown file from the left.</div>
+          <div className="empty-state">Select a file from the left.</div>
         )}
       </main>
 
