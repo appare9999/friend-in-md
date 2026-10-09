@@ -6,3 +6,5 @@ src/client/public/icons/
 .DS_Store
 .mdnote/
 .friend-in-md/
+.playwright-mcp/
+*:Zone.Identifier

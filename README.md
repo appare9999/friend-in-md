@@ -27,8 +27,16 @@ explicitly before editing, then lock it again when you're done.
   any numbers in it. Drag the small square at the selection's corner down or
   right to fill a series (1, 2, 3…) or copies - pick the default in Settings,
   hold Ctrl while dragging to switch. Same
-  lock/unlock/save flow as markdown. Files larger than 2 MB are shown in the
-  tree but blocked from opening, so a huge CSV can't lock up the browser.
+  lock/unlock/save flow as markdown. Files larger than the CSV size limit
+  (500 KB by default, adjustable from 100 KB to 10 MB in Settings) are shown
+  in the tree but blocked from opening, so a huge CSV can't lock up the
+  browser.
+- **Autosave** — while a file is unlocked, your edits are saved automatically
+  about 3 seconds after you stop typing, so work survives a crash or a closed
+  tab. **Save** still works for saving right away.
+- **Colored text** — inline `<span style="color: red">…</span>` (or legacy
+  `<font color="red">…</font>`) in a markdown file renders as colored text
+  instead of showing the raw tag. Other raw HTML stays inert.
 - **Search** — searches file names and file contents across every markdown and
   csv file under the selected folder, however deeply nested. Click a result to
   jump straight to that file.
@@ -59,6 +67,10 @@ explicitly before editing, then lock it again when you're done.
   an ordinary relative path (e.g. `![](../assets/photo.png)`), so it stays
   readable in any other markdown tool — You've got a friend in md just
   resolves that path to display the image live while you edit.
+- **Image viewer** — image files (png / jpg / gif / webp / svg / bmp / avif)
+  appear in the file tree too; click one to view it. Double-click any image
+  inside a note to open it fullscreen — scroll to zoom, drag to pan, `Esc` to
+  close.
 - **PDF export** — the **🖨 Export PDF** toolbar button opens your browser's
   print dialog scoped to just the note content (sidebar/toolbar/TOC hidden),
   so "Save as PDF" produces a clean copy of what's on screen.
@@ -85,6 +97,11 @@ explicitly before editing, then lock it again when you're done.
   script for a slide as a plain HTML comment inside it (`<!-- like this -->`)
   — Marp's own convention, so it never
   renders as visible slide content.
+
+- **Settings** — the ⚙ button in the sidebar holds the editor font, the
+  CSV size limit and fill-handle default, the quick-note folder, and
+  sliders for the sidebar, content and table-of-contents widths. Everything
+  except the quick-note folder is remembered in the browser.
 
 ## How it fits into your workflow
 
@@ -128,7 +145,8 @@ Options:
 
 - `--port <n>` — port to listen on (default `4317`). If that port is already
   taken (e.g. by another app or Docker container), You've got a friend in md
-  automatically tries the next port up instead of failing.
+  automatically tries the next port up instead of failing. Without `--port`,
+  it first tries whichever port it used last time.
 - `--no-open` — don't auto-open the browser
 - `--verbose` — print raw per-request logs (method, status, timing) in
   addition to the normal friendly log. Off by default: everyday use only
@@ -141,7 +159,13 @@ Want to glance at something you flagged for recall — a command, a snippet —
 without opening the full editor? Click **📝 Quick note** in the sidebar. It
 opens a small, read-only popup window separate from the main app.
 
-Flag any markdown file as a quick note by adding this to the very top:
+First pick the folder to scan: open **⚙ Settings → Quick note folder** and
+choose it with your OS's folder dialog. This is a separate setting from the
+folder open in the main app (and stays set across restarts), so the popup
+works no matter which notes folder you're browsing.
+
+Flag any markdown file in that folder as a quick note by adding this to the
+very top:
 
 ```markdown
 ---
@@ -199,3 +223,7 @@ your own notes only needs `npx friend-in-md <dir>`, no clone.
 - **Unlock** — makes the file editable.
 - Edit, then **Save** — writes the change to disk.
 - **Lock** — makes it read-only again, to guard against accidental edits.
+- Lock state is stored under your home directory (`~/.friend-in-md/`), not
+  inside your notes folder — nothing is ever written into the folder you're
+  browsing except your own edits. The same directory also holds the last
+  used port and the quick-note folder setting.
