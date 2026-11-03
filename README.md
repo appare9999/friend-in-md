@@ -3,7 +3,7 @@
 Let's write files that are easy for AI to read — and become better friends
 with AI!
 
-![friend-in-md screenshot](docs/images/frend_md.png)
+<img src="docs/images/alien_cowboy_dog.png" alt="Alien in a spacesuit and a cowboy dog" width="600">
 
 Point it at any folder of markdown (and csv) files (nested folders preserved),
 browse and edit them in a rich WYSIWYG editor right in the browser, and search
