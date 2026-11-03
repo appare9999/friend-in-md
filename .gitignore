@@ -1,6 +1,10 @@
 node_modules/
 dist-server/
 dist-client/
+src/client/public/icons/
 *.log
 .DS_Store
 .mdnote/
+.friend-in-md/
+.playwright-mcp/
+*:Zone.Identifier

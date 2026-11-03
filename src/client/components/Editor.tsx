@@ -3,9 +3,11 @@ import { Crepe } from "@milkdown/crepe";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import { commandsCtx } from "@milkdown/kit/core";
 import { redoCommand, undoCommand } from "@milkdown/kit/plugin/history";
-import { insertImageCommand } from "@milkdown/kit/preset/commonmark";
+import { insertImageCommand, linkAttr } from "@milkdown/kit/preset/commonmark";
 import { ensureDiagramInteractions, renderDiagramPreview } from "../lib/diagramPreview.js";
 import { ensureLatexCodeBlockMarking } from "../lib/latexBlockUi.js";
+import { ensureImageViewer } from "../lib/imageViewer.js";
+import { remarkTextColorPlugin, textColorSchema } from "../lib/textColorMark.js";
 import { assetUrl } from "../http/client.js";
 
 import "@milkdown/crepe/theme/common/style.css";
@@ -14,6 +16,7 @@ import "katex/dist/katex.min.css";
 
 ensureDiagramInteractions();
 ensureLatexCodeBlockMarking();
+ensureImageViewer();
 
 export interface EditorHandle {
   undo: () => void;
@@ -49,10 +52,17 @@ const CrepeEditor = forwardRef<EditorHandle, Props>(function CrepeEditor(
 ) {
   const crepeRef = useRef<Crepe | null>(null);
   const rootElRef = useRef<HTMLElement | null>(null);
+  const userEditedRef = useRef(false);
   const noteDir = dirOf(filePath);
 
   useEditor((root) => {
     rootElRef.current = root;
+    const markUserEdited = () => {
+      userEditedRef.current = true;
+    };
+    for (const type of ["beforeinput", "keydown", "paste", "drop", "pointerdown"]) {
+      root.addEventListener(type, markUserEdited, { capture: true });
+    }
     const crepe = new Crepe({
       root,
       defaultValue: initialValue,
@@ -68,9 +78,17 @@ const CrepeEditor = forwardRef<EditorHandle, Props>(function CrepeEditor(
         },
       },
     });
+    crepe.editor.config((ctx) => {
+      ctx.set(linkAttr.key, () => ({ target: "_blank", rel: "noopener noreferrer" }));
+    });
+    crepe.editor.use(remarkTextColorPlugin).use(textColorSchema);
     crepe.setReadonly(readOnly);
     crepe.on((listener) => {
       listener.markdownUpdated((_ctx, markdown, prevMarkdown) => {
+        // Crepe rewrites the doc right after loading (trailing paragraph,
+        // re-escaping like "_" -> "\_"). Reporting that as a change marks the
+        // file dirty, which then blocks reloading it when it changes on disk.
+        if (!userEditedRef.current) return;
         if (markdown !== prevMarkdown) onChange(markdown);
       });
     });
@@ -84,16 +102,19 @@ const CrepeEditor = forwardRef<EditorHandle, Props>(function CrepeEditor(
 
   useImperativeHandle(ref, () => ({
     undo: () => {
+      userEditedRef.current = true;
       crepeRef.current?.editor.action((ctx) => {
         ctx.get(commandsCtx).call(undoCommand.key);
       });
     },
     redo: () => {
+      userEditedRef.current = true;
       crepeRef.current?.editor.action((ctx) => {
         ctx.get(commandsCtx).call(redoCommand.key);
       });
     },
     insertImage: (relativeSrc, alt) => {
+      userEditedRef.current = true;
       crepeRef.current?.editor.action((ctx) => {
         ctx.get(commandsCtx).call(insertImageCommand.key, { src: relativeSrc, alt });
       });

@@ -1,0 +1,11 @@
+/* @theme sunset */
+
+section {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: #2b1a12;
+  font-family: "Segoe UI", sans-serif;
+}
+
+h1, h2 {
+  color: #4a1c0a;
+}

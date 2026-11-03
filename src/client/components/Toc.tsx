@@ -7,7 +7,7 @@ interface Props {
 
 export function Toc({ entries, onSelect }: Props) {
   if (entries.length === 0) {
-    return <div className="toc-empty">見出しがありません</div>;
+    return <div className="toc-empty">No headings</div>;
   }
 
   return (
@@ -21,7 +21,7 @@ export function Toc({ entries, onSelect }: Props) {
             onClick={() => onSelect(entry.index)}
             title={entry.text}
           >
-            {entry.text || "(無題)"}
+            {entry.text || "(untitled)"}
           </button>
         </li>
       ))}

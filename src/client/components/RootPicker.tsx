@@ -18,6 +18,10 @@ function pushRecent(path: string): void {
   localStorage.setItem(RECENTS_KEY, JSON.stringify(recents));
 }
 
+function removeRecent(path: string): void {
+  localStorage.setItem(RECENTS_KEY, JSON.stringify(loadRecents().filter((p) => p !== path)));
+}
+
 interface Props {
   onSelect: (path: string) => Promise<void>;
 }
@@ -29,6 +33,7 @@ export function RootPicker({ onSelect }: Props) {
   const [readmeOpen, setReadmeOpen] = useState(false);
   const [readme, setReadme] = useState<string | null>(null);
   const [readmeError, setReadmeError] = useState<string | null>(null);
+  const [recents, setRecents] = useState<string[]>(() => loadRecents());
 
   useEffect(() => {
     if (!readmeOpen || readme !== null || readmeError) return;
@@ -42,6 +47,12 @@ export function RootPicker({ onSelect }: Props) {
     setError(null);
     try {
       const path = await pickFolderNative();
+      if (path === null) {
+        // User closed the dialog without picking a folder - not an error,
+        // just let them try again.
+        setBusy(false);
+        return;
+      }
       await handleUse(path);
     } catch {
       setNativeUnavailable(true);
@@ -55,15 +66,24 @@ export function RootPicker({ onSelect }: Props) {
     try {
       await onSelect(path);
       pushRecent(path);
+      setRecents(loadRecents());
     } catch (err) {
       setError((err as Error).message);
       setBusy(false);
     }
   };
 
+  const handleRemoveRecent = (path: string) => {
+    removeRecent(path);
+    setRecents(loadRecents());
+  };
+
   return (
     <div className="root-picker">
-      <h1>You've got a friend in md (and csv)</h1>
+      <h1 className="root-picker-title">
+        <img src="/icons/logo-256.png" alt="" className="root-picker-logo" />
+        You've got a friend in md (and csv)
+      </h1>
       <p>Choose the folder of markdown files you want to browse and edit.</p>
 
       {!nativeUnavailable && (
@@ -78,6 +98,29 @@ export function RootPicker({ onSelect }: Props) {
       )}
 
       {error && <div className="error-banner">{error}</div>}
+
+      {recents.length > 0 && (
+        <div className="root-picker-recents">
+          <h2>Recent folders</h2>
+          <ul>
+            {recents.map((path) => (
+              <li key={path}>
+                <button onClick={() => handleUse(path)} disabled={busy} title={path}>
+                  {path}
+                </button>
+                <button
+                  className="remove-recent-btn"
+                  onClick={() => handleRemoveRecent(path)}
+                  disabled={busy}
+                  title="Remove this folder from the list"
+                >
+                  ✕
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="readme-accordion">
         <button

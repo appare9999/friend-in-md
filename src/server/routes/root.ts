@@ -27,10 +27,11 @@ export function registerRootRoutes(app: FastifyInstance, state: ServerState): vo
   });
 
   app.post("/api/pick-folder", async (_req, reply) => {
-    const path = await pickFolderNative();
-    if (!path) {
-      return reply.code(404).send({ error: "No native folder dialog available or selection was cancelled." });
+    const result = await pickFolderNative();
+    if (result.status === "unavailable") {
+      return reply.code(404).send({ error: "No native folder dialog available on this system." });
     }
-    return { path };
+    // Cancelled: not an error - just no folder chosen this time.
+    return { path: result.status === "picked" ? result.path : null };
   });
 }
