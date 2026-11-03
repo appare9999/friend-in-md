@@ -1,6 +1,6 @@
 {
   "name": "friend-in-md",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Browse and edit a directory of markdown and csv files in a rich WYSIWYG browser UI; files default to locked and must be explicitly unlocked before editing.",
   "license": "MIT",
   "type": "module",
